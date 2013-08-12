@@ -8,6 +8,8 @@ First install Composer:
 
     $ curl -O http://getcomposer.org/composer.phar
 
+Then install the dependencies:
+
     $ php composer.phar install
 
 # Configuration

@@ -20,3 +20,4 @@ state[] = "prodaccepted"
 [validator]
 validate[] = "CheckNameEn"
 ;validate[] = "SurfCheckAllowAll"
+;validate[] = "SurfCheckArp"

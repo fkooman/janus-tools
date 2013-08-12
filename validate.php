@@ -17,7 +17,7 @@ try {
     $entities = json_decode(file_get_contents($dirName . DIRECTORY_SEPARATOR . "export.json"), true);
 
     foreach ($validators as $v) {
-        //echo $v . PHP_EOL;
+        echo sprintf("Validator: %s" . PHP_EOL, $v);
         $class = "\\fkooman\\janus\\validate\\" . $v;
         $validate = new $class($entities, $logger);
         $validate->validateEntities();

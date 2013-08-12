@@ -12,7 +12,7 @@ try {
     $dbDsn          = $config->s('database')->l('dsn', true); // REQ
     $dbUser         = $config->s('database')->l('user');
     $dbPass         = $config->s('database')->l('pass');
-    // export
+    // data directory
     $dirName        = $config->s('export')->l('dir', true); // REQ
     // filter
     $requestedState = $config->s('filter')->s('state', false, $defaultStates)->toArray();
@@ -28,8 +28,9 @@ try {
         $entityData = array_merge($entityData, $e->getEntities("saml20-sp", $state));
     }
 
-    if (false === @file_put_contents($dirName . DIRECTORY_SEPARATOR . "export.json", json_encode($entityData))) {
-        throw new Exception("unable to write JSON file to disk");
+    $outputFile = $dirName . DIRECTORY_SEPARATOR . "export.json";
+    if (false === @file_put_contents($outputFile, json_encode($entityData))) {
+        throw new Exception(sprintf("unable to write JSON file '%s' to disk", $outputFile));
     }
 } catch (Exception $e) {
     echo sprintf("ERROR: %s", $e->getMessage());

@@ -153,7 +153,7 @@ EOF;
 
         $entity = array();
 
-        $entity['entity'] = $result[0];
+        $entity['entityData'] = $result[0];
 
         // metadata
         $entity['metadata'] = $this->getMetadata($eid, $revisionid);
@@ -171,7 +171,7 @@ EOF;
 
         // arp (SP only)
         if ("saml20-sp" === $type) {
-            $entity['arp'] = $this->getArp($entity['entity']['arp']);
+            $entity['arp'] = $this->getArp($entity['entityData']['arp']);
         }
 
         return $entity;

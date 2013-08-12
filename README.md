@@ -22,7 +22,21 @@ Do not forget to create the `export` directory, it needs to exist and be
 configured in `config/config.ini`!
 
 # Usage
+
+## Export
 You can run the `export.php` script after you configured everything.
 
     $ php export.php
 
+## Validation
+You can validate the export you just made using `validate.php`.
+
+    $ php validate.php
+    
+This script uses the export written by `export.php` and creates a log file in
+the `export` directory called `log.json`.
+
+You can add more checks by writing a class yourself implementing such a check
+and enabling it in the configuration file, see `config/config.ini.defaults` for
+an example. See the included validation classes for inspiration on how to do
+this.

@@ -16,3 +16,7 @@ state[] = "testaccepted"
 ;state[] = "QAaccepted"
 ;state[] = "prodpending"
 state[] = "prodaccepted"
+
+[validator]
+validate[] = "CheckNameEn"
+;validate[] = "SurfCheckAllowAll"

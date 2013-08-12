@@ -14,7 +14,13 @@ try {
 
     $logger = new \fkooman\janus\log\EntityLog();
 
-    $entities = json_decode(file_get_contents($dirName . DIRECTORY_SEPARATOR . "export.json"), true);
+    $inputFile = $dirName . DIRECTORY_SEPARATOR . "export.json";
+    $exportData = @file_get_contents($inputFile);
+    if (false === $exportData) {
+        throw new Exception(sprintf("unable to read JSON file '%s' from disk", $inputFile));
+    }
+
+    $entities = json_decode($exportData, true);
 
     foreach ($validators as $v) {
         echo sprintf("Validator: %s" . PHP_EOL, $v);

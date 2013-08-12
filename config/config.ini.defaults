@@ -1,0 +1,18 @@
+; set the database information according to PHP PDO settings
+[database]
+dsn="mysql:host=localhost;dbname=janus"
+;user="user"
+;pass="s3cr3t"
+
+[export]
+; choose the directory to write the exported data to
+dir="/PATH/TO/DIR/export"
+
+; choose the workflow states of entries in JANUS to export, if you select none
+; all entries will be exported
+[filter]
+state[] = "testaccepted"
+;state[] = "QApending"
+;state[] = "QAaccepted"
+;state[] = "prodpending"
+state[] = "prodaccepted"

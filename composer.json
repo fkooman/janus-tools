@@ -1,0 +1,21 @@
+{
+    "authors": [
+        {
+            "email": "fkooman@tuxed.net", 
+            "name": "Fran\u00e7ois Kooman", 
+            "role": "Developer"
+        }
+    ], 
+    "autoload": {
+        "psr-0": {
+            "fkooman\\janus\\": "src/"
+        }
+    }, 
+    "description": "Application to export JANUS metadata to JSON", 
+    "license": "Apache-2.0", 
+    "name": "fkooman/janus-export-tool", 
+    "require": {
+        "fkooman/php-lib-config": "0.2.*", 
+        "php": ">=5.3.3"
+    }
+}

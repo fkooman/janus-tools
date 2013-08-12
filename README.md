@@ -4,8 +4,11 @@ data to see if the data contained within JANUS is valid.
 
 # Installation
 You can use [Composer](http://getcomposer.org/) to install the dependencies.
+First install Composer:
 
-    $ composer install
+    $ curl -O http://getcomposer.org/composer.phar
+
+    $ php composer.phar install
 
 # Configuration
 Copy the `config/config.ini.defaults` to `config/config.ini` and modify it for

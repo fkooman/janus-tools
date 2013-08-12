@@ -20,7 +20,7 @@ abstract class Validate implements ValidateInterface
     public function validateEntities()
     {
         foreach ($this->entities as $e) {
-            $this->currentEntityId = $e['entityData']['entityid'];
+            $this->currentEntity = $e;
             switch ($e['entityData']['type']) {
                 case "saml20-sp":
                     $this->sp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['arp']);
@@ -36,12 +36,12 @@ abstract class Validate implements ValidateInterface
 
     public function logWarn($message)
     {
-        $this->log->warn($this->currentEntityId, $message);
+        $this->log->warn($this->currentEntity['entityData']['type'], $this->currentEntity['entityData']['entityid'], get_class($this), $message);
     }
 
     public function logErr($message)
     {
-        $this->log->err($this->currentEntityId, $message);
+        $this->log->err($this->currentEntity['entityData']['type'], $this->currentEntity['entityData']['entityid'], get_class($this), $message);
     }
 
 }

@@ -12,26 +12,28 @@ class EntityLog
 
     public function __construct()
     {
-        $this->l = array();
+        $this->l = array(
+            "saml20-idp" => array(),
+            "saml20-sp" => array()
+        );
     }
 
-    public function err($id, $message)
+    public function err($type, $id, $module, $message)
     {
-        $this->logEntry($id, $message, EntityLog::ERR);
+        $this->logEntry($type, $id, $module, $message, EntityLog::ERR);
     }
 
-    public function warn($id, $message)
+    public function warn($type, $id, $module, $message)
     {
-        $this->logEntry($id, $message, EntityLog::WARN);
+        $this->logEntry($type, $id, $module, $message, EntityLog::WARN);
     }
 
-    public function logEntry($id, $message, $level)
+    public function logEntry($type, $id, $module, $message, $level)
     {
-        if (!array_key_exists($id, $this->l)) {
-            //$this->l[$id] = array();
-            $this->l[$id]["messages"] = array();
+        if (!array_key_exists($id, $this->l[$type])) {
+            $this->l[$type][$id]["messages"] = array();
         }
-        array_push($this->l[$id]["messages"], array("level" => $level, "message" => $message));
+        array_push($this->l[$type][$id]["messages"], array("module" => $module, "level" => $level, "message" => $message));
     }
 
     public function toJson()

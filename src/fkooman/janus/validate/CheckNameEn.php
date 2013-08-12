@@ -4,12 +4,18 @@ namespace fkooman\janus\validate;
 
 class CheckNameEn extends Validate implements ValidateInterface
 {
-    public function validateEntities()
+
+    public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
     {
-        foreach ($this->entities as $e) {
-            if (!isset($e['metadata']['name']['en'])) {
-                $this->logWarn($e, "no english name set");
-            }
+        if (!isset($metadata['name']['en'])) {
+            $this->logWarn("no english name set");
+        }
+    }
+
+    public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
+    {
+        if (!isset($metadata['name']['en'])) {
+            $this->logWarn("no english name set");
         }
     }
 }

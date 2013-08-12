@@ -6,26 +6,37 @@ use fkooman\janus\log\EntityLog;
 
 abstract class Validate implements ValidateInterface
 {
-    const WARNING = 10;
-    const ERROR   = 20;
-
     private $log;
-    protected $entities;
+    private $entities;
+    private $currentEntity;
 
     public function __construct(array $entities, EntityLog $log)
     {
         $this->log = $log;
         $this->entities = $entities;
+        $this->currentEntity = null;
     }
 
-    public function logWarn(array $e, $message)
+    public function validateEntities()
     {
-        $this->log->warn($e['entityData']['entityid'], $message);
+        foreach ($this->entities as $e) {
+            $this->currentEntityId = $e['entityData']['entityid'];
+            if ("saml20-sp" === $e['entityData']['type']) {
+                $this->sp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['arp']);
+            } else {
+                $this->idp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['disableConsent']);
+            }
+        }
     }
 
-    public function logErr(array $e, $message)
+    public function logWarn($message)
     {
-        $this->log->err($e['entityData']['entityid'], $message);
+        $this->log->warn($this->currentEntityId, $message);
+    }
+
+    public function logErr($message)
+    {
+        $this->log->err($this->currentEntityId, $message);
     }
 
 }

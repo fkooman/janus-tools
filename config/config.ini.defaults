@@ -20,5 +20,6 @@ state[] = "prodaccepted"
 [validator]
 validate[] = "CheckNameEn"
 validate[] = "CheckContacts"
+validate[] = "CheckAcs"
 ;validate[] = "SurfCheckAllowAll"
 ;validate[] = "SurfCheckArp"

@@ -25,18 +25,18 @@ class CheckContacts extends Validate implements ValidateInterface
     private function validateContacts(array $contacts)
     {
         $validContactTypes = array ("technical", "administrative", "support", "billing", "other");
-        foreach ($contacts as $c) {
-            if (!isset($c['contactType'])) {
-                $this->logWarn("contactType not set");
+        foreach ($contacts as $k => $v) {
+            if (!isset($v['contactType'])) {
+                $this->logWarn(sprintf("contactType not set [%s]", $k));
                 continue;
             }
-            if (!in_array($c['contactType'], $validContactTypes)) {
-                $this->logWarn("invalid contactType");
+            if (!in_array($v['contactType'], $validContactTypes)) {
+                $this->logWarn(sprintf("invalid contactType [%s]", $k));
                 continue;
             }
-            if (isset($c['emailAddress']) && 0 === strlen($c['emailAddress'])) {
-                if (false === filter_var($c['emailAddress'], FILTER_VALIDATE_EMAIL)) {
-                    $this->logWarn("invalid emailAddress");
+            if (isset($v['emailAddress']) && 0 === strlen($v['emailAddress'])) {
+                if (false === filter_var($v['emailAddress'], FILTER_VALIDATE_EMAIL)) {
+                    $this->logWarn(sprintf("invalid emailAddress [%s]", $k));
                     continue;
                 }
             }

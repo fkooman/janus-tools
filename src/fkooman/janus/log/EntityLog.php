@@ -47,6 +47,8 @@ class EntityLog
 
     public function toJson()
     {
+        $this->l['generatedAt'] = date("r", time());
+
         return json_encode($this->l);
     }
 

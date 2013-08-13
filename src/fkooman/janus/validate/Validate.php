@@ -36,12 +36,12 @@ abstract class Validate implements ValidateInterface
 
     public function logWarn($message)
     {
-        $this->log->warn($this->currentEntity['entityData']['type'], $this->currentEntity['entityData']['entityid'], get_class($this), $message);
+        $this->log->warn($this->currentEntity, get_class($this), $message);
     }
 
     public function logErr($message)
     {
-        $this->log->err($this->currentEntity['entityData']['type'], $this->currentEntity['entityData']['entityid'], get_class($this), $message);
+        $this->log->err($this->currentEntity, get_class($this), $message);
     }
 
 }

@@ -18,22 +18,31 @@ class EntityLog
         );
     }
 
-    public function err($type, $id, $module, $message)
+    public function err(array $entity, $module, $message)
     {
-        $this->logEntry($type, $id, $module, $message, EntityLog::ERR);
+        $this->logEntry($entity, $module, $message, EntityLog::ERR);
     }
 
-    public function warn($type, $id, $module, $message)
+    public function warn(array $entity, $module, $message)
     {
-        $this->logEntry($type, $id, $module, $message, EntityLog::WARN);
+        $this->logEntry($entity, $module, $message, EntityLog::WARN);
     }
 
-    public function logEntry($type, $id, $module, $message, $level)
+    public function logEntry(array $entity, $module, $message, $level)
     {
-        if (!array_key_exists($id, $this->l[$type])) {
-            $this->l[$type][$id]["messages"] = array();
+        $eid = $entity['entityData']['eid'];
+        $entityId = $entity['entityData']['entityid'];
+        $type = $entity['entityData']['type'];
+        $name = isset($entity['metadata']['name']['en']) ? $entity['metadata']['name']['en'] : $entityId;
+
+        if (!array_key_exists($entityId, $this->l[$type])) {
+            $this->l[$type][$entityId] = array(
+                "name" => $name,
+                "eid" => $eid,
+                "messages" => array()
+            );
         }
-        array_push($this->l[$type][$id]["messages"], array("module" => $module, "level" => $level, "message" => $message));
+        array_push($this->l[$type][$entityId]["messages"], array("module" => $module, "level" => $level, "message" => $message));
     }
 
     public function toJson()

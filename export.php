@@ -13,7 +13,7 @@ try {
     $dbUser         = $config->s('database')->l('user');
     $dbPass         = $config->s('database')->l('pass');
     // data directory
-    $dirName        = $config->s('export')->l('dir', true); // REQ
+    $dirName        = $config->s('output')->l('exportDir', true); // REQ
     // filter
     $requestedState = $config->s('filter')->s('state', false, $defaultStates)->toArray();
 

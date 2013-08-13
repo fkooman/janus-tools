@@ -7,7 +7,8 @@ try {
     $config = \fkooman\Config\Config::fromIniFile($configFile);
 
     // data directory
-    $dirName        = $config->s('export')->l('dir', true); // REQ
+    $exportDir      = $config->s('output')->l('exportDir', true); // REQ
+    $logDir         = $config->s('output')->l('logDir', true); // REQ
 
     // validate classes
     $validators     = $config->s('validator')->s('validate', false, array())->toArray();
@@ -17,7 +18,7 @@ try {
 
     $logger = new \fkooman\janus\log\EntityLog();
 
-    $inputFile = $dirName . DIRECTORY_SEPARATOR . "export.json";
+    $inputFile = $exportDir . DIRECTORY_SEPARATOR . "export.json";
     $exportData = @file_get_contents($inputFile);
     if (false === $exportData) {
         throw new Exception(sprintf("unable to read JSON file '%s' from disk", $inputFile));
@@ -32,7 +33,7 @@ try {
         $validate->validateEntities();
     }
 
-    $outputFile = $dirName . DIRECTORY_SEPARATOR . "log.json";
+    $outputFile = $logDir . DIRECTORY_SEPARATOR . "log.json";
     if (false === @file_put_contents($outputFile, $logger->toJson())) {
         throw new Exception(sprintf("unable to write JSON file '%s' to disk", $outputFile));
     }

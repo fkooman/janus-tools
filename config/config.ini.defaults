@@ -7,9 +7,11 @@ dsn="mysql:host=localhost;dbname=janus"
 ;user="user"
 ;pass="s3cr3t"
 
-[export]
-; choose the directory to write the exported data to
-dir="/PATH/TO/DIR/export"
+[output]
+; where to write the export dump to (export.php)
+exportDir="/PATH/TO/DIR/export"
+; where to write the validation log to (validate.php)
+logDir="/PATH/TO/DIR/log"
 
 ; choose the workflow states of entries in JANUS to export, if you select none
 ; all entries will be exported

@@ -34,7 +34,7 @@ class CheckContacts extends Validate implements ValidateInterface
                 $this->logWarn(sprintf("invalid contactType [%s]", $k));
                 continue;
             }
-            if (isset($v['emailAddress']) && 0 === strlen($v['emailAddress'])) {
+            if (isset($v['emailAddress']) && 0 !== strlen($v['emailAddress'])) {
                 if (false === filter_var($v['emailAddress'], FILTER_VALIDATE_EMAIL)) {
                     $this->logWarn(sprintf("invalid emailAddress [%s]", $k));
                     continue;

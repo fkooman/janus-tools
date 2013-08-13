@@ -5,23 +5,23 @@ namespace fkooman\janus\validate\validators;
 use fkooman\janus\validate\Validate;
 use fkooman\janus\validate\ValidateInterface;
 
-class CheckAcs extends Validate implements ValidateInterface
+class CheckSso extends Validate implements ValidateInterface
 {
 
     public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
     {
+        if (!isset($metadata['SingleSignOnService'])) {
+            $this->logWarn("no SingleSignOnService");
+
+            return;
+        }
+        foreach ($metadata['SingleSignOnService'] as $k => $v) {
+            $this->validateEndpoint('SingleSignOnService', $k, $v);
+        }
     }
 
     public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
     {
-        if (!isset($metadata['AssertionConsumerService'])) {
-            $this->logWarn("no AssertionConsumerService");
-
-            return;
-        }
-        foreach ($metadata['AssertionConsumerService'] as $k => $v) {
-            $this->validateEndpoint('AssertionConsumerService', $k, $v);
-        }
     }
 
     private function validateEndpoint($type, $k, array $v)

@@ -1,6 +1,9 @@
 <?php
 
-namespace fkooman\janus\validate;
+namespace fkooman\janus\validate\validators;
+
+use fkooman\janus\validate\Validate;
+use fkooman\janus\validate\ValidateInterface;
 
 class SurfCheckArp extends Validate implements ValidateInterface
 {

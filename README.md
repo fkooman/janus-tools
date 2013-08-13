@@ -50,8 +50,9 @@ You can also use Python here to view the log somewhat formatted:
     $ cat export/log.json | python -mjson.tool
 
 # Validation Filters
-You can add your own validation filters in `src/fkooman/janus/validate`. Copy
-one of the other validators to get started. 
+You can add your own validation filters to 
+`src/fkooman/janus/validate/validators`. Copy one of the other validators to 
+get started and modify it as needed.
 
 You must implement two methods: `idp` and `sp` with their respective parameters.
 You can implement your check using the data that is made available as 

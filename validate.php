@@ -24,7 +24,7 @@ try {
 
     foreach ($validators as $v) {
         echo sprintf("Validator: %s" . PHP_EOL, $v);
-        $class = "\\fkooman\\janus\\validate\\" . $v;
+        $class = "\\fkooman\\janus\\validate\\validators\\" . $v;
         $validate = new $class($entities, $logger);
         $validate->validateEntities();
     }

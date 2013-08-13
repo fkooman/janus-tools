@@ -1,3 +1,6 @@
+; base
+timezone = "Europe/Amsterdam"
+
 ; set the database information according to PHP PDO settings
 [database]
 dsn="mysql:host=localhost;dbname=janus"

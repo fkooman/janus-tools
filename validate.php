@@ -12,6 +12,9 @@ try {
     // validate classes
     $validators     = $config->s('validator')->s('validate', false, array())->toArray();
 
+    $timezone       = $config->l('timezone', false, "Europe/Amsterdam");
+    date_default_timezone_set($timezone);
+
     $logger = new \fkooman\janus\log\EntityLog();
 
     $inputFile = $dirName . DIRECTORY_SEPARATOR . "export.json";

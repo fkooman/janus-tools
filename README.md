@@ -51,7 +51,7 @@ You can also use Python here to view the log somewhat formatted:
 
 # Validation Filters
 You can add your own validation filters to 
-`src/fkooman/janus/validate/validators`. Copy one of the other validators to 
+`src/SURFnet/janus/validate/validators`. Copy one of the other validators to 
 get started and modify it as needed.
 
 You must implement two methods: `idp` and `sp` with their respective parameters.
@@ -66,5 +66,7 @@ There is also the option to use `$this->logErr("msg");`. The context of the
 entity is saved as well: the entity ID of the entity, the entity type, i.e.:
 `saml20-idp` or `saml20-sp` and the module that generates the message.
 
+# License
+Licensed under the Apache License, Version 2.0;
 
-
+   http://www.apache.org/licenses/LICENSE-2.0

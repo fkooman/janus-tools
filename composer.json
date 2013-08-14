@@ -1,19 +1,19 @@
 {
     "authors": [
         {
-            "email": "fkooman@tuxed.net", 
+            "email": "francois.kooman@surfnet.nl", 
             "name": "Fran\u00e7ois Kooman", 
             "role": "Developer"
         }
     ], 
     "autoload": {
         "psr-0": {
-            "fkooman\\janus\\": "src/"
+            "SURFnet\\janus\\": "src/"
         }
     }, 
     "description": "Application to export JANUS metadata to JSON", 
     "license": "Apache-2.0", 
-    "name": "fkooman/janus-export-tool", 
+    "name": "SURFnet/janus-tools", 
     "require": {
         "fkooman/php-cert-parser": "0.1.*", 
         "fkooman/php-lib-config": "0.2.*", 

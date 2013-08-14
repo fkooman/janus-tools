@@ -2,3 +2,5 @@
 /config/config.ini
 /export
 /log
+/.idea
+composer.phar

@@ -6,7 +6,6 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckDefaultSP extends Validate implements ValidateInterface
 {
-
     /**
      * @param array $entityData
      * @param array $metadata
@@ -27,14 +26,12 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
      */
     public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
-
         if (!empty($metadata["coin"]["institution_id"])) {
             $requiredSurfnetSpsPerStatus = $this->config->s("require_surfnet:" . $entityData['state'])->toArray();
             $this->checkRequiredSps($requiredSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
 
             $disallowedSurfnetSpsPerStatus = $this->config->s("disallowed_surfnet:" . $entityData['state'])->toArray();
             $this->checkDisallowdSps($disallowedSurfnetSpsPerStatus, $allowedEntities);
-
         } else {
             $requiredNonSurfnetSpsPerStatus = $this->config->s("require_nonsurfnet:" . $entityData['state'])->toArray();
             $this->checkRequiredSps($requiredNonSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
@@ -58,7 +55,6 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
             if (in_array($rSP, $blockedEntities)) {
                 $this->logWarn(sprintf("Required SP is blocked (ACL): %s", $rSP));
             }
-
         }
     }
 
@@ -72,7 +68,6 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
             if (in_array($dSP, $allowedEntities)) {
                 $this->logWarn(sprintf("Disallowed SP is allowed (ACL): %s", $dSP));
             }
-
         }
     }
 }

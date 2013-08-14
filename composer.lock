@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fedf453f3bcca820f2b47bc6e318ad21",
+    "hash": "24b5cac7705f33ee3039982e542b8282",
     "packages": [
         {
             "name": "fkooman/php-cert-parser",
@@ -118,6 +118,36 @@
             ],
             "description": "PHP library to encode and decode JSON",
             "time": "2013-05-30 12:04:47"
+        },
+        {
+            "name": "fkooman/php-saml-metadata-parser",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fkooman/php-saml-metadata-parser.git",
+                "reference": "0.1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fkooman/php-saml-metadata-parser/zipball/0.1.2",
+                "reference": "0.1.2",
+                "shasum": ""
+            },
+            "require": {
+                "fkooman/php-cert-parser": "0.1.*",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "fkooman\\saml\\metadata\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "time": "2013-08-14 09:37:28"
         },
         {
             "name": "symfony/yaml",

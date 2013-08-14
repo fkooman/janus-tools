@@ -19,10 +19,11 @@
 require_once 'vendor/autoload.php';
 
 use Guzzle\Http\Client;
+use fkooman\Config\Config;
 
 try {
     $configFile = __DIR__ . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.ini";
-    $config = \fkooman\Config\Config::fromIniFile($configFile);
+    $config = Config::fromIniFile($configFile);
 
     // data directory
     $exportDir      = $config->s('output')->l('exportDir', true); // REQ

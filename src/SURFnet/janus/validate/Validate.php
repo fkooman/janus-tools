@@ -19,16 +19,19 @@
 namespace SURFnet\janus\validate;
 
 use SURFnet\janus\log\EntityLog;
+use fkooman\Config\Config;
 
 abstract class Validate implements ValidateInterface
 {
     private $log;
     private $entities;
+    private $config;
     private $currentEntity;
 
-    public function __construct(array $entities, EntityLog $log)
+    public function __construct(array $entities, Config $config, EntityLog $log)
     {
         $this->log = $log;
+        $this->config = $config;
         $this->entities = $entities;
         $this->currentEntity = null;
     }

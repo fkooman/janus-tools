@@ -17,6 +17,7 @@
     "require": {
         "fkooman/php-cert-parser": "0.1.*", 
         "fkooman/php-lib-config": "0.2.*", 
+        "fkooman/php-saml-metadata-parser": "0.1.*", 
         "php": ">=5.3.3"
     }
 }

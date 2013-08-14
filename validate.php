@@ -39,13 +39,12 @@ try {
     if (false === $exportData) {
         throw new Exception(sprintf("unable to read JSON file '%s' from disk", $inputFile));
     }
-
     $entities = json_decode($exportData, true);
 
     foreach ($validators as $v) {
         echo sprintf("Validator: %s" . PHP_EOL, $v);
         $class = "\\SURFnet\\janus\\validate\\validators\\" . $v;
-        $validate = new $class($entities, $logger);
+        $validate = new $class($entities, $config, $logger);
         $validate->validateEntities();
     }
 

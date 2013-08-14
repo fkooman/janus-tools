@@ -43,8 +43,8 @@ abstract class Validate implements ValidateInterface
         $this->log = $log;
         $this->globalConfig = $config;
 
-        $validatorName = substr(get_class($this), strrpos("\\", get_class($this)));
-        $this->config = $config->s($validatorName);
+        $validatorName = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
+        $this->config = $this->globalConfig->s($validatorName);
 
         $this->entities = $entities;
         $this->currentEntity = null;

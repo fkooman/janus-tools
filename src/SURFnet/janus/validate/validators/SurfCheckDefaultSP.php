@@ -18,13 +18,17 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
     {
     }
 
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param array $disableConsent
+     */
     public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
 
         if (!empty($metadata["coin"]["institution_id"])) {
-            var_dump($metadata["coin"]["institution_id"]);
-
-            var_dump($this->config);
             $requiredSurfnetSpsPerStatus = $this->config->s("require_surfnet:" . $entityData['state'])->toArray();
             $this->checkRequiredSps($requiredSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
 
@@ -41,13 +45,12 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
     }
 
     /**
-     * @param array $defSPs
+     * @param array $requiredSpsPerStatus
      * @param array $allowedEntities
      * @param array $blockedEntities
      */
     private function checkRequiredSps(array $requiredSpsPerStatus, array $allowedEntities, array $blockedEntities)
     {
-        var_dump($requiredSpsPerStatus);
         foreach ($requiredSpsPerStatus as $rSP) {
             if (!in_array($rSP, $allowedEntities)) {
                 $this->logWarn(sprintf("Required SP is not allowed (ACL): %s", $rSP));
@@ -62,7 +65,6 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
     /**
      * @param array $disallowedSpsPerStatus
      * @param array $allowedEntities
-     * @param array $blockedEntities
      */
     private function checkDisallowdSps(array $disallowedSpsPerStatus, array $allowedEntities)
     {

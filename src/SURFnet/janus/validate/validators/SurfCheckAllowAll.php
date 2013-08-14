@@ -24,14 +24,14 @@ use SURFnet\janus\validate\ValidateInterface;
 class SurfCheckAllowAll extends Validate implements ValidateInterface
 {
 
-    public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
+    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
         if ("no" === $entityData['allowedall']) {
             $this->logWarn("sp must have 'allowedall' set");
         }
     }
 
-    public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
         if ("yes" === $entityData['allowedall']) {
             $this->logWarn("idp must not have 'allowedall' set");

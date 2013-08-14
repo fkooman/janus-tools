@@ -24,7 +24,7 @@ use SURFnet\janus\validate\ValidateInterface;
 class CheckSso extends Validate implements ValidateInterface
 {
 
-    public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
         if (!isset($metadata['SingleSignOnService'])) {
             $this->logWarn("no SingleSignOnService");
@@ -36,7 +36,7 @@ class CheckSso extends Validate implements ValidateInterface
         }
     }
 
-    public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
+    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
     }
 

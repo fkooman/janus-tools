@@ -23,15 +23,29 @@ use fkooman\Config\Config;
 
 abstract class Validate implements ValidateInterface
 {
+    /** @var \fkooman\janus\log\EntityLog */
     private $log;
+
+    /** @var array */
     private $entities;
+
+    /** @var \fkooman\Config\Config */
+    protected $globalConfig;
+
+    /** @var \fkooman\Config\Config */
     protected $config;
+
+    /** @var array */
     private $currentEntity;
 
     public function __construct(array $entities, Config $config, EntityLog $log)
     {
         $this->log = $log;
-        $this->config = $config;
+        $this->globalConfig = $config;
+
+        $validatorName = substr(get_class($this), strrpos("\\", get_class($this)));
+        $this->config = $config->s($validatorName);
+
         $this->entities = $entities;
         $this->currentEntity = null;
     }

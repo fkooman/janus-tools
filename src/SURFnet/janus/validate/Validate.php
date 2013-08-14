@@ -38,13 +38,16 @@ abstract class Validate implements ValidateInterface
     /** @var array */
     private $currentEntity;
 
+    /** @var string */
+    private $validatorName;
+
     public function __construct(array $entities, Config $config, EntityLog $log)
     {
         $this->log = $log;
         $this->globalConfig = $config;
 
-        $validatorName = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
-        $this->config = $this->globalConfig->s($validatorName);
+        $this->validatorName = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
+        $this->config = $this->globalConfig->s($this->validatorName);
 
         $this->entities = $entities;
         $this->currentEntity = null;
@@ -74,12 +77,12 @@ abstract class Validate implements ValidateInterface
 
     public function logWarn($message)
     {
-        $this->log->warn($this->currentEntity, get_class($this), $message);
+        $this->log->warn($this->currentEntity, $this->validatorName, $message);
     }
 
     public function logErr($message)
     {
-        $this->log->err($this->currentEntity, get_class($this), $message);
+        $this->log->err($this->currentEntity, $this->validatorName, $message);
     }
 
 }

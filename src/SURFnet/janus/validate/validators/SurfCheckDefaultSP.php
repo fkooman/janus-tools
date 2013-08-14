@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2013 Remold Krol <remold.krol@everett.nl>
+ * Copyright 2013 Remold Krol <remold.krol@flex.surfnet.nl>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,13 +48,13 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
             $this->checkRequiredSps($requiredSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
 
             $disallowedSurfnetSpsPerStatus = $this->config->s("disallowed_surfnet:" . $entityData['state'])->toArray();
-            $this->checkDisallowdSps($disallowedSurfnetSpsPerStatus, $allowedEntities);
+            $this->checkDisallowedSps($disallowedSurfnetSpsPerStatus, $allowedEntities);
         } else {
             $requiredNonSurfnetSpsPerStatus = $this->config->s("require_nonsurfnet:" . $entityData['state'])->toArray();
             $this->checkRequiredSps($requiredNonSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
 
             $disallowedNonSurfnetSpsPerStatus = $this->config->s("disallowed_nonsurfnet:" . $entityData['state'])->toArray();
-            $this->checkDisallowdSps($disallowedNonSurfnetSpsPerStatus, $allowedEntities);
+            $this->checkDisallowedSps($disallowedNonSurfnetSpsPerStatus, $allowedEntities);
         }
     }
 
@@ -79,7 +79,7 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
      * @param array $disallowedSpsPerStatus
      * @param array $allowedEntities
      */
-    private function checkDisallowdSps(array $disallowedSpsPerStatus, array $allowedEntities)
+    private function checkDisallowedSps(array $disallowedSpsPerStatus, array $allowedEntities)
     {
         foreach ($disallowedSpsPerStatus as $dSP) {
             if (in_array($dSP, $allowedEntities)) {

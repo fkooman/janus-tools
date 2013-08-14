@@ -25,7 +25,7 @@ abstract class Validate implements ValidateInterface
 {
     private $log;
     private $entities;
-    private $config;
+    protected $config;
     private $currentEntity;
 
     public function __construct(array $entities, Config $config, EntityLog $log)

@@ -52,7 +52,7 @@ class CheckIdpMetadataSigningCertificates extends Validate implements ValidateIn
                     }
                 }
                 if (!$found) {
-                    $this->logErr(sprintf("signing cert '%s' from metadata URL with expiry '%s' not found in JANUS config", $k->getName(), $k->getExpiresAt()));
+                    $this->logErr(sprintf("signing cert '%s' from metadata URL valid from %s to %s not found in JANUS config", $k->getName(), date("r", $k->getNotValidBefore()), date("r", $k->getNotValidAfter())));
                 }
             }
         } catch (ParserException $e) {

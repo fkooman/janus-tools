@@ -36,7 +36,7 @@ validate[] = "CheckMetadataUrl"
 
 ; validator specific configuration
 ;[CheckNameEn]
-; the ignoreIdp and ignoreSp arrays are available to *ALL* modules, this means
-; that for that particular entityid no validation is done
+; the ignoreIdp and ignoreSp arrays are evaluated for *ALL* modules, this means
+; that for that particular entityid no validation is done for that module
 ;ignoreIdp[] = "http://idp.example.org/saml"
 ;ignoreSp[]  = "http://sp.example.org/saml"

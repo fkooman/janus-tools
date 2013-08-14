@@ -1,44 +1,76 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: rkrol
- * Date: 14-8-13
- * Time: 11:12
- * To change this template use File | Settings | File Templates.
- */
-
 namespace SURFnet\janus\validate\validators;
 
-use SURFnet\janus\log\EntityLog;
 use SURFnet\janus\validate\Validate;
 use SURFnet\janus\validate\ValidateInterface;
-use fkooman\Config\Config;
 
-class SurfCheckDefaultSP  extends Validate implements ValidateInterface{
+class SurfCheckDefaultSP extends Validate implements ValidateInterface
+{
 
-    private $defaultSPs;
-
-    public function __construct(array $entities, Config $config, EntityLog $log)
-    {
-        echo "construct SurfCheckDefaultSP";
-        $this->defaultSPs     = $config->s('require_surfnet:prodaccepted')->s('sp', false, array())->toArray();
-        parent::__construct($entities,$config, $log);
-    }
-
-
-
-    public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param $arp
+     */
+    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
     }
 
-    public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
-        foreach ($this->defaultSPs as $defSP) {
-        if (!in_array($defSP,$allowedEntities)) {
-        $this->logWarn(sprintf("Default SURFnet SP not connected: %s", $defSP ));
-//          echo "Default SURFnet SP: API not connected";
-//            echo sprintf("Default SURFnet SP not connected: %s", $defSP );
+
+        if (!empty($metadata["coin"]["institution_id"])) {
+            var_dump($metadata["coin"]["institution_id"]);
+
+            var_dump($this->config);
+            $requiredSurfnetSpsPerStatus = $this->config->s("require_surfnet:" . $entityData['state'])->toArray();
+            $this->checkRequiredSps($requiredSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
+
+            $disallowedSurfnetSpsPerStatus = $this->config->s("disallowed_surfnet:" . $entityData['state'])->toArray();
+            $this->checkDisallowdSps($disallowedSurfnetSpsPerStatus, $allowedEntities);
+
+        } else {
+            $requiredNonSurfnetSpsPerStatus = $this->config->s("require_nonsurfnet:" . $entityData['state'])->toArray();
+            $this->checkRequiredSps($requiredNonSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
+
+            $disallowedNonSurfnetSpsPerStatus = $this->config->s("disallowed_nonsurfnet:" . $entityData['state'])->toArray();
+            $this->checkDisallowdSps($disallowedNonSurfnetSpsPerStatus, $allowedEntities);
+        }
     }
+
+    /**
+     * @param array $defSPs
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     */
+    private function checkRequiredSps(array $requiredSpsPerStatus, array $allowedEntities, array $blockedEntities)
+    {
+        var_dump($requiredSpsPerStatus);
+        foreach ($requiredSpsPerStatus as $rSP) {
+            if (!in_array($rSP, $allowedEntities)) {
+                $this->logWarn(sprintf("Required SP is not allowed (ACL): %s", $rSP));
+            }
+            if (in_array($rSP, $blockedEntities)) {
+                $this->logWarn(sprintf("Required SP is blocked (ACL): %s", $rSP));
+            }
+
+        }
+    }
+
+    /**
+     * @param array $disallowedSpsPerStatus
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     */
+    private function checkDisallowdSps(array $disallowedSpsPerStatus, array $allowedEntities)
+    {
+        foreach ($disallowedSpsPerStatus as $dSP) {
+            if (in_array($dSP, $allowedEntities)) {
+                $this->logWarn(sprintf("Disallowed SP is allowed (ACL): %s", $dSP));
+            }
+
         }
     }
 }

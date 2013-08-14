@@ -42,10 +42,15 @@ abstract class Validate implements ValidateInterface
             $this->currentEntity = $e;
             switch ($e['entityData']['type']) {
                 case "saml20-sp":
-                    $this->sp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['arp']);
+                    // check if entityid should be ignored
+                    if (!in_array($e['entityData']['entityid'], $this->config->s('ignoreSp')->toArray())) {
+                        $this->sp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['arp']);
+                    }
                     break;
                 case "saml20-idp":
-                    $this->idp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['disableConsent']);
+                    if (!in_array($e['entityData']['entityid'], $this->config->s('ignoreIdp')->toArray())) {
+                        $this->idp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['disableConsent']);
+                    }
                     break;
                 default:
                     throw new Exception("unsupported entity type");

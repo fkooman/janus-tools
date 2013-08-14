@@ -12,6 +12,8 @@ dsn="mysql:host=localhost;dbname=janus"
 exportDir="/PATH/TO/DIR/export"
 ; where to write the validation log to (validate.php)
 logDir="/PATH/TO/DIR/log"
+; where to write the metadata cache (metadata.php)
+metadataDir="/PATH/TO/DIR/metadata"
 
 ; choose the workflow states of entries in JANUS to export, if you select none
 ; all entries will be exported
@@ -31,3 +33,10 @@ validate[] = "CheckCertificates"
 validate[] = "CheckMetadataUrl"
 ;validate[] = "SurfCheckAllowAll"
 ;validate[] = "SurfCheckArp"
+
+; validator specific configuration
+;[CheckNameEn]
+; the ignoreIdp and ignoreSp arrays are evaluated for *ALL* modules, this means
+; that for that particular entityid no validation is done for that module
+;ignoreIdp[] = "http://idp.example.org/saml"
+;ignoreSp[]  = "http://sp.example.org/saml"

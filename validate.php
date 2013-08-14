@@ -44,7 +44,7 @@ try {
     foreach ($validators as $v) {
         echo sprintf("Validator: %s" . PHP_EOL, $v);
         $class = "\\SURFnet\\janus\\validate\\validators\\" . $v;
-        $validate = new $class($entities, $config, $logger);
+        $validate = new $class($entities, $config->s($v), $logger);
         $validate->validateEntities();
     }
 

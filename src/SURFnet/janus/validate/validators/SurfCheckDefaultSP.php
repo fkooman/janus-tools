@@ -9,18 +9,36 @@
 
 namespace SURFnet\janus\validate\validators;
 
+use SURFnet\janus\log\EntityLog;
+use SURFnet\janus\validate\Validate;
+use SURFnet\janus\validate\ValidateInterface;
+use fkooman\Config\Config;
 
-class SurfCheckDefaultSP {
+class SurfCheckDefaultSP  extends Validate implements ValidateInterface{
+
+    private $defaultSPs;
+
+    public function __construct(array $entities, Config $config, EntityLog $log)
+    {
+        echo "construct SurfCheckDefaultSP";
+        $this->defaultSPs     = $config->s('require_surfnet:prodaccepted')->s('sp', false, array())->toArray();
+        parent::__construct($entities,$config, $log);
+    }
+
+
+
     public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
     {
     }
 
     public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
     {
-        echo 'SurfCheckDefaultSP';
-        if (!in_array('"https://api.surfconext.nl/',$allowedEntities)) {
-        $this->logWarn("Default SURFnet SP: API not connected" );
-            echo "Default SURFnet SP: API not connected";
+        foreach ($this->defaultSPs as $defSP) {
+        if (!in_array($defSP,$allowedEntities)) {
+        $this->logWarn(sprintf("Default SURFnet SP not connected: %s", $defSP ));
+//          echo "Default SURFnet SP: API not connected";
+//            echo sprintf("Default SURFnet SP not connected: %s", $defSP );
     }
+        }
     }
 }

@@ -23,12 +23,12 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class CheckMetadataUrl extends Validate implements ValidateInterface
 {
-    public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
         $this->validateMetadataUrl($entityData);
     }
 
-    public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
+    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
         $this->validateMetadataUrl($entityData);
     }

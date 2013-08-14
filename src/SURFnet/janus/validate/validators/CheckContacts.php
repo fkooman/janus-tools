@@ -24,14 +24,14 @@ use SURFnet\janus\validate\ValidateInterface;
 class CheckContacts extends Validate implements ValidateInterface
 {
 
-    public function sp($entityData, $metadata, $allowedEntities, $blockedEntities, $arp)
+    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
         if (isset($metadata['contacts'])) {
             $this->validateContacts($metadata['contacts']);
         }
     }
 
-    public function idp($entityData, $metadata, $allowedEntities, $blockedEntities, $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
         if (isset($metadata['contacts'])) {
             $this->validateContacts($metadata['contacts']);

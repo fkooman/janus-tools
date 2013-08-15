@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2013 Remold Krol <remold.krol@flex.surfnet.nl>
+ * Copyright 2013 Remold Krol <remold.krol@everett.nl>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,24 +23,10 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckDefaultSP extends Validate implements ValidateInterface
 {
-    /**
-     * @param array $entityData
-     * @param array $metadata
-     * @param array $allowedEntities
-     * @param array $blockedEntities
-     * @param $arp
-     */
     public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
     }
 
-    /**
-     * @param array $entityData
-     * @param array $metadata
-     * @param array $allowedEntities
-     * @param array $blockedEntities
-     * @param array $disableConsent
-     */
     public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
         if (!empty($metadata["coin"]["institution_id"])) {
@@ -58,11 +44,6 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
         }
     }
 
-    /**
-     * @param array $requiredSpsPerStatus
-     * @param array $allowedEntities
-     * @param array $blockedEntities
-     */
     private function checkRequiredSps(array $requiredSpsPerStatus, array $allowedEntities, array $blockedEntities)
     {
         foreach ($requiredSpsPerStatus as $rSP) {
@@ -75,10 +56,6 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
         }
     }
 
-    /**
-     * @param array $disallowedSpsPerStatus
-     * @param array $allowedEntities
-     */
     private function checkDisallowedSps(array $disallowedSpsPerStatus, array $allowedEntities)
     {
         foreach ($disallowedSpsPerStatus as $dSP) {

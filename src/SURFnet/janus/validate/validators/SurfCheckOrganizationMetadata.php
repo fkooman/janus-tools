@@ -23,13 +23,6 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckOrganizationMetadata extends Validate implements ValidateInterface
 {
-    /**
-     * @param array $entityData
-     * @param array $metadata
-     * @param array $allowedEntities
-     * @param array $blockedEntities
-     * @param $arp
-     */
     public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
         $this->checkOrganizationMetadata($metadata, 'OrganizationDisplayName');
@@ -37,13 +30,6 @@ class SurfCheckOrganizationMetadata extends Validate implements ValidateInterfac
         $this->checkOrganizationURL($metadata);
     }
 
-    /**
-     * @param array $entityData
-     * @param array $metadata
-     * @param array $allowedEntities
-     * @param array $blockedEntities
-     * @param array $disableConsent
-     */
     public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
         $this->checkOrganizationMetadata($metadata, 'OrganizationDisplayName');
@@ -51,30 +37,26 @@ class SurfCheckOrganizationMetadata extends Validate implements ValidateInterfac
         $this->checkOrganizationURL($metadata);
     }
 
-    /**
-     * @param array $metadata
-     * @param $keyToCheck
-     */
     private function checkOrganizationMetadata(array $metadata, $keyToCheck)
     {
         if (!isset($metadata[$keyToCheck])) {
             $this->logWarn("no " . $keyToCheck);
+
             return;
         }
     }
 
-    /**
-     * @param array $metadata
-     */
     private function checkOrganizationURL(array $metadata)
     {
         if (!isset($metadata['OrganizationURL'])) {
             $this->logWarn("no OrganizationURL");
+
             return;
         }
-        foreach ($metadata['OrganizationURL'] as $k => $v)
+        foreach ($metadata['OrganizationURL'] as $k => $v) {
             if (filter_var($v, FILTER_VALIDATE_URL) === FALSE) {
                 $this->logWarn("OrganizationURL:" . $k . ' is not a valid URL');
             }
+        }
     }
 }

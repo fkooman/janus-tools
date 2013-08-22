@@ -53,19 +53,35 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
         array $blockedEntities,
         array $disableConsent
     ) {
-        if (!empty($metadata["coin"]["institution_id"])) {
-            $requiredSurfnetSpsPerStatus = $this->config->s("require_surfnet:" . $entityData['state'])->toArray();
-            $this->checkRequiredSps($requiredSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
-
-            $disallowedSurfnetSpsPerStatus = $this->config->s("disallowed_surfnet:" . $entityData['state'])->toArray();
-            $this->checkDisallowedSps($disallowedSurfnetSpsPerStatus, $allowedEntities);
+        if (!empty($metadata["coin"]["guest_qualifier"])) {
+            $this->_checkIdp(
+                $metadata["coin"]["guest_qualifier"],
+                $entityData['state'],
+                $allowedEntities,
+                $blockedEntities
+            );
         } else {
-            $requiredNonSurfnetSpsPerStatus = $this->config->s("require_nonsurfnet:" . $entityData['state'])->toArray();
-            $this->checkRequiredSps($requiredNonSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
-
-            $disallowedNonSurfnetSpsPerStatus = $this->config->s("disallowed_nonsurfnet:" . $entityData['state'])->toArray();
-            $this->checkDisallowedSps($disallowedNonSurfnetSpsPerStatus, $allowedEntities);
+            $this->logErr("Guest Qualifier not set");
         }
+    }
+
+    /**
+     * @param string $qualifier
+     * @param string $state
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     */
+    private function _checkIdp(
+        $qualifier,
+        $state,
+        array $allowedEntities,
+        array $blockedEntities
+    ) {
+        $requiredSps = $this->config->s("require:guest" . $qualifier . ':' . $state)->toArray();
+        $this->checkRequiredSps($requiredSps, $allowedEntities, $blockedEntities);
+
+        $disallowedSps = $this->config->s("disallowed:guest" . $qualifier . ':' . $state)->toArray();
+        $this->checkDisallowedSps($disallowedSps, $allowedEntities);
     }
 
     /**

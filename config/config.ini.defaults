@@ -37,6 +37,7 @@ validate[] = "CheckInactiveMetadataFields"
 ;validate[] = "SurfCheckAllowAll"
 ;validate[] = "SurfCheckArp"
 ;validate[] = "SurfCheckDefaultSP"
+;validate[] = "SurfCheckLogoUrl"
 
 ; validator specific configuration
 ;[CheckNameEn]

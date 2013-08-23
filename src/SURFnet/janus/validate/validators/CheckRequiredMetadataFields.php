@@ -111,7 +111,7 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
             return false;
         }
         foreach ($metadata[$keyToCheck] as $language => $url) {
-            if (filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED) === false) {
+            if (filter_var($url, FILTER_VALIDATE_URL) === false) {
 //                echo "url=".$url . PHP_EOL;
                 $this->logWarn($keyToCheck . ':' . $language . ' is not a valid URL');
             }

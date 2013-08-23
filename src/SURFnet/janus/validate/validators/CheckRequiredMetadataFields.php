@@ -47,6 +47,10 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
         foreach ($requiredSpLangFields as $reqLangField) {
             $this->_checkRequiredLangField($metadata, $reqLangField);
         }
+        $requiredSpUrls = $this->config->s("requiredSpUrl")->toArray();
+        foreach ($requiredSpUrls as $reqUrl) {
+            $this->_checkRequiredUrl($metadata, $reqUrl);
+        }
         $requiredSpLangUrls = $this->config->s("requiredSpLangUrl")->toArray();
         foreach ($requiredSpLangUrls as $reqLangUrl) {
             $this->_checkRequiredLangUrl($metadata, $reqLangUrl);
@@ -74,6 +78,10 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
         $requiredIdpLangFields = $this->config->s("requiredIdpLangField")->toArray();
         foreach ($requiredIdpLangFields as $reqLangField) {
             $this->_checkRequiredLangField($metadata, $reqLangField);
+        }
+        $requiredIdpUrls = $this->config->s("requiredIdpUrl")->toArray();
+        foreach ($requiredIdpUrls as $reqUrl) {
+            $this->_checkRequiredUrl($metadata, $reqUrl);
         }
         $requiredIdpLangUrls = $this->config->s("requiredIdpLangUrl")->toArray();
         foreach ($requiredIdpLangUrls as $reqLangUrl) {
@@ -112,10 +120,30 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
         }
         foreach ($metadata[$keyToCheck] as $language => $url) {
             if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-//                echo "url=".$url . PHP_EOL;
-                $this->logWarn($keyToCheck . ':' . $language . ' is not a valid URL');
+                $this->logWarn(sprintf("%s:%s  is not a valid URL [%s]", $keyToCheck, $language, $url));
             }
         }
+    }
+
+    /**
+     * @param array $metadata
+     * @param string $keyToCheck
+     */
+    private function _checkRequiredUrl(array $metadata, $keyToCheck)
+    {
+        if (!$this->_checkRequiredField($metadata, $keyToCheck)) {
+            return false;
+        }
+        if (is_array($metadata[$keyToCheck])) {
+            foreach ($metadata[$keyToCheck] as $language => $url) {
+                if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+                    $this->logWarn(sprintf("%s:%s  is not a valid URL [%s]", $keyToCheck, $language, $url));
+                }
+            }
+        } elseif (filter_var($metadata[$keyToCheck], FILTER_VALIDATE_URL) === false) {
+            $this->logWarn(sprintf("%s  is not a valid URL [%s]", $keyToCheck, $metadata[$keyToCheck]));
+        }
+
     }
 
     /**

@@ -100,6 +100,29 @@ abstract class Validate implements ValidateInterface
         }
     }
 
+    // Function sp can be overwritten by validator child
+    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
+    {
+        return;
+    }
+
+    // Function oauth can be overwritten by validator child
+    public function oauth(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
+    {
+        return;
+    }
+
+    // Function idp can be overwritten by validator child
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent
+    ) {
+        return;
+    }
+
     public function logWarn($message)
     {
         $this->log->warn($this->currentEntity, $this->validatorName, $message);

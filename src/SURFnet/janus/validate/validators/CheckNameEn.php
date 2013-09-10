@@ -31,6 +31,13 @@ class CheckNameEn extends Validate implements ValidateInterface
         }
     }
 
+    public function oauth(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
+    {
+        if (!isset($metadata['name']['en'])) {
+            $this->logWarn("no english name set");
+        }
+    }
+
     public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
     {
         if (!isset($metadata['name']['en'])) {

@@ -61,12 +61,37 @@ abstract class Validate implements ValidateInterface
                 case "saml20-sp":
                     // check if entityid should be ignored
                     if (!in_array($e['entityData']['entityid'], $this->config->s('ignoreSp')->toArray())) {
-                        $this->sp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['arp']);
+                        // Check if SP is a SAML2.0 SP (not an OAuth Relying Party)
+                        if ($this->_isSamlSp($e['metadata'])) {
+                            $this->sp(
+                                $e['entityData'],
+                                $e['metadata'],
+                                $e['allowedEntities'],
+                                $e['blockedEntities'],
+                                $e['arp']
+                            );
+                        }
+                        // check if SP is an OAuth Relying Party
+                        if ($this->_isOauthSp($e['metadata'])) {
+                            $this->oauth(
+                                $e['entityData'],
+                                $e['metadata'],
+                                $e['allowedEntities'],
+                                $e['blockedEntities'],
+                                $e['arp']
+                            );
+                        }
                     }
                     break;
                 case "saml20-idp":
                     if (!in_array($e['entityData']['entityid'], $this->config->s('ignoreIdp')->toArray())) {
-                        $this->idp($e['entityData'], $e['metadata'], $e['allowedEntities'], $e['blockedEntities'], $e['disableConsent']);
+                        $this->idp(
+                            $e['entityData'],
+                            $e['metadata'],
+                            $e['allowedEntities'],
+                            $e['blockedEntities'],
+                            $e['disableConsent']
+                        );
                     }
                     break;
                 default:
@@ -83,6 +108,30 @@ abstract class Validate implements ValidateInterface
     public function logErr($message)
     {
         $this->log->err($this->currentEntity, $this->validatorName, $message);
+    }
+
+    /**
+     * If a ACS location is specified the SP is assumed to be an SAML 2.0 SP
+     *
+     * @param array $metadata
+     */
+    private function _isSamlSp(array $metadata)
+    {
+        foreach ($metadata['AssertionConsumerService'] as $k => $acs) {
+            if (!empty($metadata['AssertionConsumerService'][$k]['Location'])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * If metadata contains coin:oauth:* it is assumed to be an OAuth relying party
+     * @param array $metadata
+     */
+    private function _isOauthSp(array $metadata)
+    {
+        return isset($metadata['coin']['oauth']);
     }
 
 }

@@ -21,7 +21,7 @@ namespace SURFnet\janus\validate\validators;
 use SURFnet\janus\validate\Validate;
 use SURFnet\janus\validate\ValidateInterface;
 
-class EmptyCheck  extends Validate implements ValidateInterface
+class EmptyCheck extends Validate implements ValidateInterface
 {
 
     /**
@@ -32,6 +32,23 @@ class EmptyCheck  extends Validate implements ValidateInterface
      * @param $arp
      */
     public function sp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
+
+    }
+
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param $arp
+     */
+    public function oauth(
         array $entityData,
         array $metadata,
         array $allowedEntities,

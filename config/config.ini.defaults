@@ -41,6 +41,7 @@ validate[] = "CheckOauthMinimalRequired"
 ;validate[] = "SurfCheckLogoUrl"
 ;validate[] = "SurfCheckInstitutionGuestStatus"
 ;validate[] = "SurfCheckNonLocalhost"
+;validate[] = "SurfCheckAclContainsOnlyOwnStateSps"
 
 ; validator specific configuration
 ;[CheckNameEn]

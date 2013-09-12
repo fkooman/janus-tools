@@ -23,29 +23,63 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckDefaultSP extends Validate implements ValidateInterface
 {
-    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
-    {
-    }
-
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
-    {
-        if (!empty($metadata["coin"]["institution_id"])) {
-            $requiredSurfnetSpsPerStatus = $this->config->s("require_surfnet:" . $entityData['state'])->toArray();
-            $this->checkRequiredSps($requiredSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
-
-            $disallowedSurfnetSpsPerStatus = $this->config->s("disallowed_surfnet:" . $entityData['state'])->toArray();
-            $this->checkDisallowedSps($disallowedSurfnetSpsPerStatus, $allowedEntities);
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param array $disableConsent
+     * @param array $entities
+     */
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent,
+        array $entities
+    ) {
+        if (!empty($metadata["coin"]["guest_qualifier"])) {
+            $this->checkIdp(
+                $metadata["coin"]["guest_qualifier"],
+                $entityData['state'],
+                $allowedEntities,
+                $blockedEntities
+            );
         } else {
-            $requiredNonSurfnetSpsPerStatus = $this->config->s("require_nonsurfnet:" . $entityData['state'])->toArray();
-            $this->checkRequiredSps($requiredNonSurfnetSpsPerStatus, $allowedEntities, $blockedEntities);
-
-            $disallowedNonSurfnetSpsPerStatus = $this->config->s("disallowed_nonsurfnet:" . $entityData['state'])->toArray();
-            $this->checkDisallowedSps($disallowedNonSurfnetSpsPerStatus, $allowedEntities);
+            $this->logErr("Guest Qualifier not set");
         }
     }
 
-    private function checkRequiredSps(array $requiredSpsPerStatus, array $allowedEntities, array $blockedEntities)
-    {
+    /**
+     * @param string $qualifier
+     * @param string $state
+     * @param array  $allowedEntities
+     * @param array  $blockedEntities
+     */
+    private function checkIdp(
+        $qualifier,
+        $state,
+        array $allowedEntities,
+        array $blockedEntities
+    ) {
+        $requiredSps = $this->config->s("require:guest" . $qualifier . ':' . $state)->toArray();
+        $this->checkRequiredSps($requiredSps, $allowedEntities, $blockedEntities);
+
+        $disallowedSps = $this->config->s("disallowed:guest" . $qualifier . ':' . $state)->toArray();
+        $this->checkDisallowedSps($disallowedSps, $allowedEntities);
+    }
+
+    /**
+     * @param array $requiredSpsPerStatus
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     */
+    private function checkRequiredSps(
+        array $requiredSpsPerStatus,
+        array $allowedEntities,
+        array $blockedEntities
+    ) {
         foreach ($requiredSpsPerStatus as $rSP) {
             if (!in_array($rSP, $allowedEntities)) {
                 $this->logWarn(sprintf("Required SP is not allowed (ACL): %s", $rSP));
@@ -56,8 +90,14 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
         }
     }
 
-    private function checkDisallowedSps(array $disallowedSpsPerStatus, array $allowedEntities)
-    {
+    /**
+     * @param array $disallowedSpsPerStatus
+     * @param array $allowedEntities
+     */
+    private function checkDisallowedSps(
+        array $disallowedSpsPerStatus,
+        array $allowedEntities
+    ) {
         foreach ($disallowedSpsPerStatus as $dSP) {
             if (in_array($dSP, $allowedEntities)) {
                 $this->logWarn(sprintf("Disallowed SP is allowed (ACL): %s", $dSP));

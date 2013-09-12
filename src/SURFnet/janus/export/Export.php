@@ -266,7 +266,7 @@ EOF;
             if (empty($v)) {
                 unset($metadata[$k]);
             } else {
-                if (FALSE !== strpos($k, ":")) {
+                if (false !== strpos($k, ":")) {
                     $e = explode(":", $k);
                     if (2 === count($e)) {
                         // only simple case for now
@@ -287,5 +287,4 @@ EOF;
 
         return $metadata;
     }
-
 }

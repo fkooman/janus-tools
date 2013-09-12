@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright 2013 François Kooman <francois.kooman@surfnet.nl>
+ * Copyright 2013 Remold Krol <remold.krol@everett.nl>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +15,56 @@
  * limitations under the License.
  */
 
-namespace SURFnet\janus\validate;
+namespace SURFnet\janus\validate\validators;
 
-interface ValidateInterface
+use SURFnet\janus\validate\Validate;
+use SURFnet\janus\validate\ValidateInterface;
+
+class EmptyCheck extends Validate implements ValidateInterface
 {
+
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param $arp
+     */
     public function sp(
         array $entityData,
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
         $arp
-    );
+    ) {
+
+    }
+
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param $arp
+     */
     public function oauth(
         array $entityData,
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
         $arp
-    );
+    ) {
+
+    }
+
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param array $disableConsent
+     * @param array $entities
+     */
     public function idp(
         array $entityData,
         array $metadata,
@@ -41,5 +72,7 @@ interface ValidateInterface
         array $blockedEntities,
         array $disableConsent,
         array $entities
-    );
+    ) {
+
+    }
 }

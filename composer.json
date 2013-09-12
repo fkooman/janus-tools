@@ -1,24 +1,24 @@
 {
     "authors": [
         {
-            "email": "francois.kooman@surfnet.nl", 
-            "name": "Fran\u00e7ois Kooman", 
+            "email": "francois.kooman@surfnet.nl",
+            "name": "Fran\u00e7ois Kooman",
             "role": "Developer"
         }
-    ], 
+    ],
     "autoload": {
         "psr-0": {
             "SURFnet\\janus\\": "src/"
         }
-    }, 
-    "description": "Application to export JANUS metadata to JSON", 
-    "license": "Apache-2.0", 
-    "name": "SURFnet/janus-tools", 
+    },
+    "description": "Application to export JANUS metadata to JSON",
+    "license": "Apache-2.0",
+    "name": "SURFnet/janus-tools",
     "require": {
-        "fkooman/php-cert-parser": "0.1.*", 
-        "fkooman/php-lib-config": "0.2.*", 
-        "fkooman/php-saml-metadata-parser": "0.1.*", 
-        "guzzle/guzzle": "3.7.*", 
+        "fkooman/php-cert-parser": "0.1.*",
+        "fkooman/php-lib-config": "0.2.*",
+        "fkooman/php-saml-metadata-parser": "0.1.*",
+        "guzzle/guzzle": "3.7.*",
         "php": ">=5.3.3"
     }
 }

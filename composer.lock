@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-cert-parser.git",
-                "reference": "0.1.4"
+                "reference": "932e119373904eba6457daa8420f4c5d48de8c38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-cert-parser/zipball/0.1.4",
-                "reference": "0.1.4",
+                "url": "https://api.github.com/repos/fkooman/php-cert-parser/zipball/932e119373904eba6457daa8420f4c5d48de8c38",
+                "reference": "932e119373904eba6457daa8420f4c5d48de8c38",
                 "shasum": ""
             },
             "require": {
@@ -125,12 +125,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-saml-metadata-parser.git",
-                "reference": "0.1.2"
+                "reference": "1bdf1e0e57668b0052f30bf96421f91a9e128b71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-saml-metadata-parser/zipball/0.1.2",
-                "reference": "0.1.2",
+                "url": "https://api.github.com/repos/fkooman/php-saml-metadata-parser/zipball/1bdf1e0e57668b0052f30bf96421f91a9e128b71",
+                "reference": "1bdf1e0e57668b0052f30bf96421f91a9e128b71",
                 "shasum": ""
             },
             "require": {
@@ -151,16 +151,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.7.2",
+            "version": "v3.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "v3.7.2"
+                "reference": "0f16aad385528b5cf790392cb4a4d16cf600e944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.7.2",
-                "reference": "v3.7.2",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0f16aad385528b5cf790392cb4a4d16cf600e944",
+                "reference": "0f16aad385528b5cf790392cb4a4d16cf600e944",
                 "shasum": ""
             },
             "require": {
@@ -239,21 +239,21 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-08-02 18:31:05"
+            "time": "2013-09-08 21:09:18"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.3.3",
+            "version": "v2.3.4",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "v2.3.3"
+                "reference": "41c9826457c65fa3cf746f214985b7ca9cba42f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.3.3",
-                "reference": "v2.3.3",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/41c9826457c65fa3cf746f214985b7ca9cba42f8",
+                "reference": "41c9826457c65fa3cf746f214985b7ca9cba42f8",
                 "shasum": ""
             },
             "require": {
@@ -297,17 +297,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.3.3",
+            "version": "v2.3.4",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "v2.3.3"
+                "reference": "5a279f1b5f5e1045a6c432354d9ea727ff3a9847"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.3.3",
-                "reference": "v2.3.3",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/5a279f1b5f5e1045a6c432354d9ea727ff3a9847",
+                "reference": "5a279f1b5f5e1045a6c432354d9ea727ff3a9847",
                 "shasum": ""
             },
             "require": {
@@ -340,7 +340,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-07-21 12:12:18"
+            "time": "2013-08-24 15:26:22"
         }
     ],
     "packages-dev": [

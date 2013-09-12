@@ -22,5 +22,5 @@ interface ValidateInterface
 {
     public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp);
     public function oauth(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp);
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent);
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent, array $entities);
 }

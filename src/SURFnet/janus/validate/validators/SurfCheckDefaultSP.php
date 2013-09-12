@@ -28,30 +28,16 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
      * @param array $metadata
      * @param array $allowedEntities
      * @param array $blockedEntities
-     * @param $arp
-     */
-    public function sp(
-        array $entityData,
-        array $metadata,
-        array $allowedEntities,
-        array $blockedEntities,
-        $arp
-    ) {
-    }
-
-    /**
-     * @param array $entityData
-     * @param array $metadata
-     * @param array $allowedEntities
-     * @param array $blockedEntities
      * @param array $disableConsent
+     * @param array $entities
      */
     public function idp(
         array $entityData,
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent
+        array $disableConsent,
+        array $entities
     ) {
         if (!empty($metadata["coin"]["guest_qualifier"])) {
             $this->_checkIdp(

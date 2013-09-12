@@ -31,7 +31,7 @@ class SurfCheckAllowAll extends Validate implements ValidateInterface
         }
     }
 
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent, array $entities)
     {
         if ("yes" === $entityData['allowedall']) {
             $this->logWarn("idp must not have 'allowedall' set");

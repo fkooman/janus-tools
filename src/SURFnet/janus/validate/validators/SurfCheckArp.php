@@ -30,8 +30,4 @@ class SurfCheckArp extends Validate implements ValidateInterface
             $this->logWarn("sp must have arp");
         }
     }
-
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
-    {
-    }
 }

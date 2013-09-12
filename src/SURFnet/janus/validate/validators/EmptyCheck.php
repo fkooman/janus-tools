@@ -64,13 +64,15 @@ class EmptyCheck extends Validate implements ValidateInterface
      * @param array $allowedEntities
      * @param array $blockedEntities
      * @param array $disableConsent
+     * @param array $entities
      */
     public function idp(
         array $entityData,
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent
+        array $disableConsent,
+        array $entities
     ) {
 
     }

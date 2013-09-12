@@ -23,37 +23,21 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckInstitutionGuestStatus  extends Validate implements ValidateInterface
 {
-
-    /**
-     * @param array $entityData
-     * @param array $metadata
-     * @param array $allowedEntities
-     * @param array $blockedEntities
-     * @param $arp
-     */
-    public function sp(
-        array $entityData,
-        array $metadata,
-        array $allowedEntities,
-        array $blockedEntities,
-        $arp
-    ) {
-
-    }
-
     /**
      * @param array $entityData
      * @param array $metadata
      * @param array $allowedEntities
      * @param array $blockedEntities
      * @param array $disableConsent
+     * @param array $entities
      */
     public function idp(
         array $entityData,
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent
+        array $disableConsent,
+        array $entities
     ) {
 
         if (!empty($metadata['coin']['institution_id'])) {

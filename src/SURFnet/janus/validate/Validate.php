@@ -90,7 +90,8 @@ abstract class Validate implements ValidateInterface
                             $e['metadata'],
                             $e['allowedEntities'],
                             $e['blockedEntities'],
-                            $e['disableConsent']
+                            $e['disableConsent'],
+                            $this->entities
                         );
                     }
                     break;
@@ -118,7 +119,8 @@ abstract class Validate implements ValidateInterface
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent
+        array $disableConsent,
+        array $entities
     ) {
         return;
     }

@@ -28,7 +28,7 @@ class CheckCertificates extends Validate implements ValidateInterface
     // 60*60*24*14
     const EXPIRY_WARNING_TIME = 1209600;
 
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent, array $entities)
     {
         $this->validateCertificates($metadata);
     }

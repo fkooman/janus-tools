@@ -30,7 +30,7 @@ class CheckIdpMetadataSigningCertificates extends Validate implements ValidateIn
     {
     }
 
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent)
+    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent, array $entities)
     {
         $metadataDir = $this->globalConfig->s('output')->l('metadataDir', true);
         $metadataUrl = $entityData['metadataurl'];

@@ -62,7 +62,7 @@ abstract class Validate implements ValidateInterface
                     // check if entityid should be ignored
                     if (!in_array($e['entityData']['entityid'], $this->config->s('ignoreSp')->toArray())) {
                         // Check if SP is a SAML2.0 SP (not an OAuth Relying Party)
-                        if ($this->_isSamlSp($e['metadata'])) {
+                        if ($this->isSamlSp($e['metadata'])) {
                             $this->sp(
                                 $e['entityData'],
                                 $e['metadata'],
@@ -72,7 +72,7 @@ abstract class Validate implements ValidateInterface
                             );
                         }
                         // check if SP is an OAuth Relying Party
-                        if ($this->_isOauthSp($e['metadata'])) {
+                        if ($this->isOauthSp($e['metadata'])) {
                             $this->oauth(
                                 $e['entityData'],
                                 $e['metadata'],
@@ -140,13 +140,14 @@ abstract class Validate implements ValidateInterface
      *
      * @param array $metadata
      */
-    private function _isSamlSp(array $metadata)
+    private function isSamlSp(array $metadata)
     {
         foreach ($metadata['AssertionConsumerService'] as $k => $acs) {
             if (!empty($metadata['AssertionConsumerService'][$k]['Location'])) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -154,9 +155,8 @@ abstract class Validate implements ValidateInterface
      * If metadata contains coin:oauth:* it is assumed to be an OAuth relying party
      * @param array $metadata
      */
-    private function _isOauthSp(array $metadata)
+    private function isOauthSp(array $metadata)
     {
         return isset($metadata['coin']['oauth']);
     }
-
 }

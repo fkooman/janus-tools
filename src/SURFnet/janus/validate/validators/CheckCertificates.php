@@ -28,13 +28,24 @@ class CheckCertificates extends Validate implements ValidateInterface
     // 60*60*24*14
     const EXPIRY_WARNING_TIME = 1209600;
 
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent, array $entities)
-    {
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent,
+        array $entities
+    ) {
         $this->validateCertificates($metadata);
     }
 
-    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
-    {
+    public function sp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
         $this->validateCertificates($metadata);
     }
 
@@ -58,14 +69,26 @@ class CheckCertificates extends Validate implements ValidateInterface
             $c = new CertParser($c);
             $expiresAt = $c->getNotValidAfter();
             if (time() > $expiresAt) {
-                $this->logWarn(sprintf("certificate '%s' expired at %s [%s]", $c->getName(), date("r", $expiresAt), $i));
+                $this->logWarn(
+                    sprintf(
+                        "certificate '%s' expired at %s [%s]",
+                        $c->getName(),
+                        date("r", $expiresAt),
+                        $i
+                    )
+                );
             } elseif (time() + self::EXPIRY_WARNING_TIME > $expiresAt) {
-                $this->logWarn(sprintf("certificate '%s' expires at %s [%s]", $c->getName(), date("r", $expiresAt), $i));
+                $this->logWarn(
+                    sprintf(
+                        "certificate '%s' expires at %s [%s]",
+                        $c->getName(),
+                        date("r", $expiresAt),
+                        $i
+                    )
+                );
             }
         } catch (CertParserException $e) {
             $this->logWarn(sprintf("%s [%s]", $e->getMessage(), $i));
         }
-
     }
-
 }

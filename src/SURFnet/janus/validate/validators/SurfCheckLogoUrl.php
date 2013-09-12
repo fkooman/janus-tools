@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 namespace SURFnet\janus\validate\validators;
 
 use SURFnet\janus\validate\Validate;
@@ -38,7 +37,7 @@ class SurfCheckLogoUrl extends Validate implements ValidateInterface
         array $blockedEntities,
         $arp
     ) {
-        $this->_validateLogoURL($metadata);
+        $this->validateLogoURL($metadata);
     }
 
     /**
@@ -57,13 +56,13 @@ class SurfCheckLogoUrl extends Validate implements ValidateInterface
         array $disableConsent,
         array $entities
     ) {
-        $this->_validateLogoURL($metadata);
+        $this->validateLogoURL($metadata);
     }
 
     /**
      * @param array $metadata
      */
-    private function _validateLogoURL(
+    private function validateLogoURL(
         array $metadata
     ) {
         if (isset($metadata['logo'])) {
@@ -71,11 +70,13 @@ class SurfCheckLogoUrl extends Validate implements ValidateInterface
                 if (isset($metadata['logo'][0]['url'])) {
                     $url = $metadata['logo'][0]['url'];
                     if ('https://.png' == $url) {
-                        $this->logWarn('Logo URL contains default URL "https://.png"');                        
+                        $this->logWarn('Logo URL contains default URL "https://.png"');
+
                         return;
                     }
                     if (false === filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
                         $this->logWarn(sprintf("Logo URL invalid Location [%s]", $url));
+
                         return;
                     }
                     if (0 !== strpos($url, "https://")) {

@@ -26,12 +26,14 @@ use fkooman\X509\CertParser;
 
 class CheckIdpMetadataSigningCertificates extends Validate implements ValidateInterface
 {
-    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
-    {
-    }
-
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent, array $entities)
-    {
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent,
+        array $entities
+    ) {
         $metadataDir = $this->globalConfig->s('output')->l('metadataDir', true);
         $metadataUrl = $entityData['metadataurl'];
         $metadataFile = $metadataDir . DIRECTORY_SEPARATOR . md5($metadataUrl) . ".xml";
@@ -52,7 +54,14 @@ class CheckIdpMetadataSigningCertificates extends Validate implements ValidateIn
                     }
                 }
                 if (!$found) {
-                    $this->logErr(sprintf("signing cert '%s' from metadata URL valid from %s to %s not found in JANUS config", $k->getName(), date("r", $k->getNotValidBefore()), date("r", $k->getNotValidAfter())));
+                    $this->logErr(
+                        sprintf(
+                            "signing cert '%s' from metadata URL valid from %s to %s not found in JANUS config",
+                            $k->getName(),
+                            date("r", $k->getNotValidBefore()),
+                            date("r", $k->getNotValidAfter())
+                        )
+                    );
                 }
             }
         } catch (ParserException $e) {
@@ -82,5 +91,4 @@ class CheckIdpMetadataSigningCertificates extends Validate implements ValidateIn
 
         return $signingKeys;
     }
-
 }

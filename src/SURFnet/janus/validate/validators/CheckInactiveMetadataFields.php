@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 namespace SURFnet\janus\validate\validators;
 
 use SURFnet\janus\validate\Validate;
@@ -56,18 +55,18 @@ class CheckInactiveMetadataFields extends Validate implements ValidateInterface
         array $disableConsent,
         array $entities
     ) {
-        $this->_checkInactiveMetadata($metadata, 'logo', 0, 'href');
-        $this->_checkInactiveMetadata($metadata, 'base64attributes');
-        $this->_checkInactiveMetadata($metadata, 'NameIDFormats', 0);
-        $this->_checkInactiveMetadata($metadata, 'NameIDFormats', 1);
-        $this->_checkInactiveMetadata($metadata, 'NameIDFormats', 2);
-        $this->_checkInactiveMetadata($metadata, 'redirect.validate');
-        $this->_checkInactiveMetadata($metadata, 'SingleLogoutService', 0, 'Binding');
-        $this->_checkInactiveMetadata($metadata, 'SingleLogoutService', 0, 'Location');
-        $this->_checkInactiveMetadata($metadata, 'url', 'en');
+        $this->checkInactiveMetadata($metadata, 'logo', 0, 'href');
+        $this->checkInactiveMetadata($metadata, 'base64attributes');
+        $this->checkInactiveMetadata($metadata, 'NameIDFormats', 0);
+        $this->checkInactiveMetadata($metadata, 'NameIDFormats', 1);
+        $this->checkInactiveMetadata($metadata, 'NameIDFormats', 2);
+        $this->checkInactiveMetadata($metadata, 'redirect.validate');
+        $this->checkInactiveMetadata($metadata, 'SingleLogoutService', 0, 'Binding');
+        $this->checkInactiveMetadata($metadata, 'SingleLogoutService', 0, 'Location');
+        $this->checkInactiveMetadata($metadata, 'url', 'en');
     }
 
-    private function _checkInactiveMetadata(
+    private function checkInactiveMetadata(
         array $metadata,
         $key,
         $subKey = null,

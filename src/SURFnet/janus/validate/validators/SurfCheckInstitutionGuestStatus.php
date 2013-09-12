@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-
 namespace SURFnet\janus\validate\validators;
 
 use SURFnet\janus\validate\Validate;
 use SURFnet\janus\validate\ValidateInterface;
 
-class SurfCheckInstitutionGuestStatus  extends Validate implements ValidateInterface
+class SurfCheckInstitutionGuestStatus extends Validate implements ValidateInterface
 {
     /**
      * @param array $entityData

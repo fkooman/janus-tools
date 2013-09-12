@@ -24,7 +24,6 @@ use SURFnet\janus\validate\ValidateInterface;
 class CheckRequiredMetadataFields extends Validate implements ValidateInterface
 {
 
-
     /**
      * @param array $entityData
      * @param array $metadata
@@ -41,19 +40,19 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
     ) {
         $requiredSpFields = $this->config->s("requiredSpField")->toArray();
         foreach ($requiredSpFields as $reqField) {
-            $this->_checkRequiredField($metadata, $reqField);
+            $this->checkRequiredField($metadata, $reqField);
         }
         $requiredSpLangFields = $this->config->s("requiredSpLangField")->toArray();
         foreach ($requiredSpLangFields as $reqLangField) {
-            $this->_checkRequiredLangField($metadata, $reqLangField);
+            $this->checkRequiredLangField($metadata, $reqLangField);
         }
         $requiredSpUrls = $this->config->s("requiredSpUrl")->toArray();
         foreach ($requiredSpUrls as $reqUrl) {
-            $this->_checkRequiredUrl($metadata, $reqUrl);
+            $this->checkRequiredUrl($metadata, $reqUrl);
         }
         $requiredSpLangUrls = $this->config->s("requiredSpLangUrl")->toArray();
         foreach ($requiredSpLangUrls as $reqLangUrl) {
-            $this->_checkRequiredLangUrl($metadata, $reqLangUrl);
+            $this->checkRequiredLangUrl($metadata, $reqLangUrl);
         }
     }
 
@@ -74,29 +73,29 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
     ) {
         $requiredIdpFields = $this->config->s("requiredIdpField")->toArray();
         foreach ($requiredIdpFields as $reqField) {
-            $this->_checkRequiredField($metadata, $reqField);
+            $this->checkRequiredField($metadata, $reqField);
         }
         $requiredIdpLangFields = $this->config->s("requiredIdpLangField")->toArray();
         foreach ($requiredIdpLangFields as $reqLangField) {
-            $this->_checkRequiredLangField($metadata, $reqLangField);
+            $this->checkRequiredLangField($metadata, $reqLangField);
         }
         $requiredIdpUrls = $this->config->s("requiredIdpUrl")->toArray();
         foreach ($requiredIdpUrls as $reqUrl) {
-            $this->_checkRequiredUrl($metadata, $reqUrl);
+            $this->checkRequiredUrl($metadata, $reqUrl);
         }
         $requiredIdpLangUrls = $this->config->s("requiredIdpLangUrl")->toArray();
         foreach ($requiredIdpLangUrls as $reqLangUrl) {
-            $this->_checkRequiredLangUrl($metadata, $reqLangUrl);
+            $this->checkRequiredLangUrl($metadata, $reqLangUrl);
         }
     }
 
     /**
-     * @param array $metadata
+     * @param array  $metadata
      * @param string $keyToCheck
      */
-    private function _checkRequiredLangField(array $metadata, $keyToCheck)
+    private function checkRequiredLangField(array $metadata, $keyToCheck)
     {
-        if (!$this->_checkRequiredField($metadata, $keyToCheck)) {
+        if (!$this->checkRequiredField($metadata, $keyToCheck)) {
             return false;
         }
         $languages = $this->config->s("language")->toArray();
@@ -106,17 +105,17 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
 
             }
         }
+
         return true;
     }
 
-
     /**
-     * @param array $metadata
+     * @param array  $metadata
      * @param string $keyToCheck
      */
-    private function _checkRequiredLangUrl(array $metadata, $keyToCheck)
+    private function checkRequiredLangUrl(array $metadata, $keyToCheck)
     {
-        if (!$this->_checkRequiredLangField($metadata, $keyToCheck)) {
+        if (!$this->checkRequiredLangField($metadata, $keyToCheck)) {
             return false;
         }
         foreach ($metadata[$keyToCheck] as $language => $url) {
@@ -127,12 +126,12 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
     }
 
     /**
-     * @param array $metadata
+     * @param array  $metadata
      * @param string $keyToCheck
      */
-    private function _checkRequiredUrl(array $metadata, $keyToCheck)
+    private function checkRequiredUrl(array $metadata, $keyToCheck)
     {
-        if (!$this->_checkRequiredField($metadata, $keyToCheck)) {
+        if (!$this->checkRequiredField($metadata, $keyToCheck)) {
             return false;
         }
         if (is_array($metadata[$keyToCheck])) {
@@ -148,17 +147,17 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
     }
 
     /**
-     * @param array $metadata
+     * @param array  $metadata
      * @param string $keyToCheck
      */
-    private function _checkRequiredField(array $metadata, $keyToCheck)
+    private function checkRequiredField(array $metadata, $keyToCheck)
     {
         if (!isset($metadata[$keyToCheck])) {
             $this->logWarn("no " . $keyToCheck);
 
             return false;
         }
+
         return true;
     }
-
 }

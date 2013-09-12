@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 namespace SURFnet\janus\validate\validators;
 
 use SURFnet\janus\validate\Validate;
@@ -39,8 +38,7 @@ class CheckOauthMinimalRequired extends Validate implements ValidateInterface
     ) {
         if (isset($metadata['coin'])) {
             if (isset($metadata['coin']['oauth'])) {
-//                $this->_checkKey($metadata['coin']['oauth']);
-
+                // $this->checkKey($metadata['coin']['oauth']);
             } else {
                 $this->logErr('No oauth metadata"');
             }
@@ -53,10 +51,10 @@ class CheckOauthMinimalRequired extends Validate implements ValidateInterface
     /**
      * @param array $oauth
      */
-    private function _checkKey(array $oauth)
+    private function checkKey(array $oauth)
     {
         if (isset($oauth['consumer_key'])) {
-            if (!$this->_isRegex('consumer_key')) {
+            if (!$this->isRegex('consumer_key')) {
                 $this->logWarn("Consumer Key is not a regular expression");
             }
 
@@ -68,7 +66,7 @@ class CheckOauthMinimalRequired extends Validate implements ValidateInterface
     /**
      * @param string $strToCheck
      */
-    private function _isRegex($strToCheck)
+    private function isRegex($strToCheck)
     {
         $trackErrors = ini_set('track_errors', 'on');
         $php_errormsg = '';
@@ -81,6 +79,7 @@ class CheckOauthMinimalRequired extends Validate implements ValidateInterface
         if ($trackErrors !== false) {
             ini_set('track_errors', $trackErrors);
         }
+
         return $isRegex;
     }
 }

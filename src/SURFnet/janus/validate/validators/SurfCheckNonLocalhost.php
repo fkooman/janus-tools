@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 namespace SURFnet\janus\validate\validators;
 
 use SURFnet\janus\validate\Validate;
@@ -38,7 +37,7 @@ class SurfCheckNonLocalhost extends Validate implements ValidateInterface
         array $blockedEntities,
         $arp
     ) {
-        $this->_checkEntityIdNotLocalhost($entityData);
+        $this->checkEntityIdNotLocalhost($entityData);
     }
 
     /**
@@ -57,13 +56,13 @@ class SurfCheckNonLocalhost extends Validate implements ValidateInterface
         array $disableConsent,
         array $entities
     ) {
-        $this->_checkEntityIdNotLocalhost($entityData);
+        $this->checkEntityIdNotLocalhost($entityData);
     }
 
     /**
      * @param array $entityData
      */
-    private function _checkEntityIdNotLocalhost(array $entityData)
+    private function checkEntityIdNotLocalhost(array $entityData)
     {
         if (isset($entityData['entityid'])) {
             if (strpos($entityData['entityid'], 'localhost') !== false) {

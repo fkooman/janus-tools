@@ -40,7 +40,7 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
         array $entities
     ) {
         if (!empty($metadata["coin"]["guest_qualifier"])) {
-            $this->_checkIdp(
+            $this->checkIdp(
                 $metadata["coin"]["guest_qualifier"],
                 $entityData['state'],
                 $allowedEntities,
@@ -54,10 +54,10 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
     /**
      * @param string $qualifier
      * @param string $state
-     * @param array $allowedEntities
-     * @param array $blockedEntities
+     * @param array  $allowedEntities
+     * @param array  $blockedEntities
      */
-    private function _checkIdp(
+    private function checkIdp(
         $qualifier,
         $state,
         array $allowedEntities,

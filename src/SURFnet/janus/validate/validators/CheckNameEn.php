@@ -24,22 +24,38 @@ use SURFnet\janus\validate\ValidateInterface;
 class CheckNameEn extends Validate implements ValidateInterface
 {
 
-    public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
-    {
+    public function sp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
         if (!isset($metadata['name']['en'])) {
             $this->logWarn("no english name set");
         }
     }
 
-    public function oauth(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
-    {
+    public function oauth(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
         if (!isset($metadata['name']['en'])) {
             $this->logWarn("no english name set");
         }
     }
 
-    public function idp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, array $disableConsent, array $entities)
-    {
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent,
+        array $entities
+    ) {
         if (!isset($metadata['name']['en'])) {
             $this->logWarn("no english name set");
         }

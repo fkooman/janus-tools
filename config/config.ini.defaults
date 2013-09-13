@@ -32,10 +32,16 @@ validate[] = "CheckSso"
 validate[] = "CheckCertificates"
 validate[] = "CheckMetadataUrl"
 validate[] = "CheckIdpMetadataSigningCertificates"
+validate[] = "CheckRequiredMetadataFields"
+validate[] = "CheckInactiveMetadataFields"
+validate[] = "CheckOauthMinimalRequired"
 ;validate[] = "SurfCheckAllowAll"
 ;validate[] = "SurfCheckArp"
 ;validate[] = "SurfCheckDefaultSP"
-;validate[] = "SurfCheckOrganizationMetadata"
+;validate[] = "SurfCheckLogoUrl"
+;validate[] = "SurfCheckInstitutionGuestStatus"
+;validate[] = "SurfCheckNonLocalhost"
+;validate[] = "SurfCheckAclContainsOnlyOwnStateSps"
 
 ; validator specific configuration
 ;[CheckNameEn]
@@ -43,6 +49,21 @@ validate[] = "CheckIdpMetadataSigningCertificates"
 ; that for that particular entityid no validation is done for that module
 ;ignoreIdp[] = "http://idp.example.org/saml"
 ;ignoreSp[]  = "http://sp.example.org/saml"
+
+
+; Check for required fields for both SP and IdP
+;[CheckRequiredMetadataFields]
+;language[] = "en"
+;language[] = "nl"
+;
+;requiredIdpField[] = "certData"
+;requiredIdpLangField[] = "name"
+;requiredIdpLangUrl[] = "OrganizationURL"
+;
+;requiredSpField[] = "certData"
+;requiredSpLangField[] = "name"
+;requiredSpLangUrl[] = "url"
+
 
 ; Specific check for SURFnet. Full SURFnet IdPs must have access to some 
 ; default SPs, while other IdPs may not have access to these SPs.
@@ -52,3 +73,4 @@ validate[] = "CheckIdpMetadataSigningCertificates"
 ;require_surfnet:testaccepted[] = "http://sp.required.test.example.org/saml"
 ;disallowed_nonsurfnet:prodaccepted[] = "http://sp.surfnet.example.org/saml"
 ;disallowed_nonsurfnet:testaccepted[] = "http://sp.surfnet.test.example.org/saml"
+

@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright 2013 François Kooman <francois.kooman@surfnet.nl>
+ * Copyright 2013 Remold Krol <remold.krol@everett.nl>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +20,16 @@ namespace SURFnet\janus\validate\validators;
 use SURFnet\janus\validate\Validate;
 use SURFnet\janus\validate\ValidateInterface;
 
-class SurfCheckAllowAll extends Validate implements ValidateInterface
+class SurfCheckNonLocalhost extends Validate implements ValidateInterface
 {
 
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param $arp
+     */
     public function sp(
         array $entityData,
         array $metadata,
@@ -31,11 +37,17 @@ class SurfCheckAllowAll extends Validate implements ValidateInterface
         array $blockedEntities,
         $arp
     ) {
-        if ("no" === $entityData['allowedall']) {
-            $this->logWarn("sp must have 'allowedall' set");
-        }
+        $this->checkEntityIdNotLocalhost($entityData);
     }
 
+    /**
+     * @param array $entityData
+     * @param array $metadata
+     * @param array $allowedEntities
+     * @param array $blockedEntities
+     * @param array $disableConsent
+     * @param array $entities
+     */
     public function idp(
         array $entityData,
         array $metadata,
@@ -44,8 +56,18 @@ class SurfCheckAllowAll extends Validate implements ValidateInterface
         array $disableConsent,
         array $entities
     ) {
-        if ("yes" === $entityData['allowedall']) {
-            $this->logWarn("idp must not have 'allowedall' set");
+        $this->checkEntityIdNotLocalhost($entityData);
+    }
+
+    /**
+     * @param array $entityData
+     */
+    private function checkEntityIdNotLocalhost(array $entityData)
+    {
+        if (isset($entityData['entityid'])) {
+            if (strpos($entityData['entityid'], 'localhost') !== false) {
+                $this->logWarn("EntityID contains 'localhost'");
+            }
         }
     }
 }

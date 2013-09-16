@@ -28,15 +28,13 @@ class SurfCheckInstitutionGuestStatus extends Validate implements ValidateInterf
      * @param array $allowedEntities
      * @param array $blockedEntities
      * @param array $disableConsent
-     * @param array $entities
      */
     public function idp(
         array $entityData,
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
-        array $entities
+        array $disableConsent
     ) {
 
         if (!empty($metadata['coin']['institution_id'])) {

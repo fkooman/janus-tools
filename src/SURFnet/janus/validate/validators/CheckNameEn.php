@@ -41,8 +41,7 @@ class CheckNameEn extends Validate implements ValidateInterface
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
-        array $entities
+        array $disableConsent
     ) {
         if (!isset($metadata['name']['en'])) {
             $this->logWarn("no english name set");

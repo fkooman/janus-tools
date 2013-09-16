@@ -28,8 +28,7 @@ class CheckMetadataUrl extends Validate implements ValidateInterface
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
-        array $entities
+        array $disableConsent
     ) {
         $this->validateMetadataUrl($entityData);
     }

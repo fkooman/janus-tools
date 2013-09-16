@@ -52,8 +52,7 @@ class CheckInactiveMetadataFields extends Validate implements ValidateInterface
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
-        array $entities
+        array $disableConsent
     ) {
         $this->checkInactiveMetadata($metadata, 'logo', 0, 'href');
         $this->checkInactiveMetadata($metadata, 'base64attributes');

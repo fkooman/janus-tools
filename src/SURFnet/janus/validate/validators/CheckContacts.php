@@ -41,8 +41,7 @@ class CheckContacts extends Validate implements ValidateInterface
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
-        array $entities
+        array $disableConsent
     ) {
         if (isset($metadata['contacts'])) {
             $this->validateContacts($metadata['contacts']);

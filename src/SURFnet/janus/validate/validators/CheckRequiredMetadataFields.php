@@ -68,8 +68,7 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
-        array $entities
+        array $disableConsent
     ) {
         $requiredIdpFields = $this->config->s("requiredIdpField")->toArray();
         foreach ($requiredIdpFields as $reqField) {

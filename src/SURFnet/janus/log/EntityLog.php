@@ -58,7 +58,14 @@ class EntityLog
                 "messages" => array()
             );
         }
-        array_push($this->l[$type][$entityId]["messages"], array("module" => $module, "level" => $level, "message" => $message));
+        array_push(
+            $this->l[$type][$entityId]["messages"],
+            array(
+                "module" => $module,
+                "level" => $level,
+                "message" => $message
+            )
+        );
     }
 
     public function toJson()
@@ -67,5 +74,4 @@ class EntityLog
 
         return json_encode($this->l);
     }
-
 }

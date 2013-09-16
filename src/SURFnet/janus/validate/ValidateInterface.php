@@ -27,19 +27,12 @@ interface ValidateInterface
         array $blockedEntities,
         $arp
     );
-    public function oauth(
-        array $entityData,
-        array $metadata,
-        array $allowedEntities,
-        array $blockedEntities,
-        $arp
-    );
+
     public function idp(
         array $entityData,
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
-        array $entities
+        array $disableConsent
     );
 }

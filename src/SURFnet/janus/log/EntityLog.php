@@ -28,7 +28,10 @@ class EntityLog
 
     public function __construct()
     {
-        $this->l = array();
+        $this->l = array(
+            "saml20-idp" => array(),
+            "saml20-sp" => array()
+        );
     }
 
     public function err(array $entity, $module, $message)
@@ -45,31 +48,17 @@ class EntityLog
     {
         $eid = $entity['entityData']['eid'];
         $entityId = $entity['entityData']['entityid'];
-        $state = $entity['entityData']['state'];
         $type = $entity['entityData']['type'];
         $name = isset($entity['metadata']['name']['en']) ? $entity['metadata']['name']['en'] : $entityId;
 
-        if (!array_key_exists($state, $this->l)) {
-            $this->l[$state] = array(
-                "saml20-idp" => array(),
-                "saml20-sp" => array()
-            );
-        }
-
-        if (!array_key_exists($entityId, $this->l[$state][$type])) {
-            $this->l[$state][$type][$entityId] = array(
+        if (!array_key_exists($entityId, $this->l[$type])) {
+            $this->l[$type][$entityId] = array(
                 "name" => $name,
                 "eid" => $eid,
                 "messages" => array()
             );
         }
-        array_push(
-            $this->l[$state][$type][$entityId]["messages"],
-            array("module" => $module,
-                "level" => $level,
-                "message" => $message
-            )
-        );
+        array_push($this->l[$type][$entityId]["messages"], array("module" => $module, "level" => $level, "message" => $message));
     }
 
     public function toJson()
@@ -78,4 +67,5 @@ class EntityLog
 
         return json_encode($this->l);
     }
+
 }

@@ -49,12 +49,14 @@ class EntityLog
         $eid = $entity['entityData']['eid'];
         $entityId = $entity['entityData']['entityid'];
         $type = $entity['entityData']['type'];
+        $state = $entity['entityData']['state'];
         $name = isset($entity['metadata']['name']['en']) ? $entity['metadata']['name']['en'] : $entityId;
 
         if (!array_key_exists($entityId, $this->l[$type])) {
             $this->l[$type][$entityId] = array(
                 "name" => $name,
                 "eid" => $eid,
+                "state" => $state,
                 "messages" => array()
             );
         }

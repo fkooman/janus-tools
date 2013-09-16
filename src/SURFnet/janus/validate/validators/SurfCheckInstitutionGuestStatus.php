@@ -22,6 +22,16 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckInstitutionGuestStatus extends Validate implements ValidateInterface
 {
+    public function sp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
+
+    }
+
     /**
      * @param array $entityData
      * @param array $metadata

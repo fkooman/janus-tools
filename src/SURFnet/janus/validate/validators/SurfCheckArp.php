@@ -23,6 +23,15 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckArp extends Validate implements ValidateInterface
 {
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent
+    ) {
+
+    }
 
     public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {

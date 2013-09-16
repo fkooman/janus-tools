@@ -33,7 +33,7 @@ class CheckCertificates extends Validate implements ValidateInterface
         array $metadata,
         array $allowedEntities,
         array $blockedEntities,
-        array $disableConsent,
+        array $disableConsent
     ) {
         $this->validateCertificates($metadata);
     }

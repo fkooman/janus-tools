@@ -23,6 +23,15 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class CheckSso extends Validate implements ValidateInterface
 {
+    public function sp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
+
+    }
 
     public function idp(
         array $entityData,

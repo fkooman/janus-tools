@@ -26,6 +26,16 @@ use fkooman\X509\CertParser;
 
 class CheckIdpMetadataSigningCertificates extends Validate implements ValidateInterface
 {
+    public function sp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
+
+    }
+
     public function idp(
         array $entityData,
         array $metadata,

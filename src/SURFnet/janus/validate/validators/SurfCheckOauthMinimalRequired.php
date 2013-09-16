@@ -22,6 +22,26 @@ use SURFnet\janus\validate\ValidateInterface;
 
 class SurfCheckOauthMinimalRequired extends Validate implements ValidateInterface
 {
+    public function sp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        $arp
+    ) {
+
+    }
+
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent
+    ) {
+
+    }
+
     /**
      * @param array $entityData
      * @param array $metadata

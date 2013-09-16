@@ -24,6 +24,16 @@ use SURFnet\janus\validate\ValidateInterface;
 class CheckAcs extends Validate implements ValidateInterface
 {
 
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent
+    ) {
+
+    }
+
     public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
         if (!isset($metadata['AssertionConsumerService'])) {

@@ -20,7 +20,7 @@ namespace SURFnet\janus\validate\validators;
 use SURFnet\janus\validate\Validate;
 use SURFnet\janus\validate\ValidateInterface;
 
-class CheckOauthMinimalRequired extends Validate implements ValidateInterface
+class SurfCheckOauthMinimalRequired extends Validate implements ValidateInterface
 {
     /**
      * @param array $entityData

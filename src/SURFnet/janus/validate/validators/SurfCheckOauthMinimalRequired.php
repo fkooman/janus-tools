@@ -29,33 +29,6 @@ class SurfCheckOauthMinimalRequired extends Validate implements ValidateInterfac
         array $blockedEntities,
         $arp
     ) {
-
-    }
-
-    public function idp(
-        array $entityData,
-        array $metadata,
-        array $allowedEntities,
-        array $blockedEntities,
-        array $disableConsent
-    ) {
-
-    }
-
-    /**
-     * @param array $entityData
-     * @param array $metadata
-     * @param array $allowedEntities
-     * @param array $blockedEntities
-     * @param $arp
-     */
-    public function oauth(
-        array $entityData,
-        array $metadata,
-        array $allowedEntities,
-        array $blockedEntities,
-        $arp
-    ) {
         if (isset($metadata['coin'])) {
             if (isset($metadata['coin']['oauth'])) {
                 // $this->checkKey($metadata['coin']['oauth']);
@@ -65,6 +38,15 @@ class SurfCheckOauthMinimalRequired extends Validate implements ValidateInterfac
         } else {
             $this->logErr('No coin metadata"');
         }
+    }
+
+    public function idp(
+        array $entityData,
+        array $metadata,
+        array $allowedEntities,
+        array $blockedEntities,
+        array $disableConsent
+    ) {
 
     }
 

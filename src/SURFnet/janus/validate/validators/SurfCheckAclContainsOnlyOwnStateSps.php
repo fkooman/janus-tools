@@ -49,7 +49,7 @@ class SurfCheckAclContainsOnlyOwnStateSps extends Validate implements ValidateIn
     ) {
         $ownState = $entityData['state'];
         foreach ($allowedEntities as $k => $allowedEntity) {
-            foreach ($entities as $e) {
+            foreach ($this->entities as $e) {
                 if ($e['entityData']['type'] == "saml20-sp") {
                     if ($e['entityData']['entityid'] == $allowedEntity) {
                         if ($e['entityData']['state'] !== $ownState) {

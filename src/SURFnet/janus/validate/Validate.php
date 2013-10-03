@@ -23,16 +23,16 @@ use fkooman\Config\Config;
 
 abstract class Validate implements ValidateInterface
 {
-    /** @var \fkooman\janus\log\EntityLog */
+    /** @var fkooman\janus\log\EntityLog */
     private $log;
 
     /** @var array */
-    private $entities;
+    protected $entities;
 
-    /** @var \fkooman\Config\Config */
+    /** @var fkooman\Config\Config */
     protected $globalConfig;
 
-    /** @var \fkooman\Config\Config */
+    /** @var fkooman\Config\Config */
     protected $config;
 
     /** @var array */

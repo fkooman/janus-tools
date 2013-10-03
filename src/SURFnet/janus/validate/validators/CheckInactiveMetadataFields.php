@@ -73,17 +73,17 @@ class CheckInactiveMetadataFields extends Validate implements ValidateInterface
     ) {
         if (!is_null($subSubKey)) {
             if (isset($metadata[$key][$subKey][$subSubKey])) {
-                $this->logWarn('Contains Inactive metadatafield - ' . $key . ':' . $subKey . ':' . $subSubKey);
+                $this->logWarning('Contains Inactive metadatafield - ' . $key . ':' . $subKey . ':' . $subSubKey);
             }
         } elseif (!is_null($subKey)) {
 
             if (isset($metadata[$key][$subKey])) {
-                $this->logWarn('Contains Inactive metadatafield - ' . $key . ':' . $subKey);
+                $this->logWarning('Contains Inactive metadatafield - ' . $key . ':' . $subKey);
             }
 
         } else {
             if (isset($metadata[$key])) {
-                $this->logWarn('Contains Inactive metadatafield - ' . $key);
+                $this->logWarning('Contains Inactive metadatafield - ' . $key);
             }
         }
     }

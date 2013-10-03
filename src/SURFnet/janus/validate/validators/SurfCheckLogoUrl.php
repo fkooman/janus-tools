@@ -68,22 +68,22 @@ class SurfCheckLogoUrl extends Validate implements ValidateInterface
                 if (isset($metadata['logo'][0]['url'])) {
                     $url = $metadata['logo'][0]['url'];
                     if ('https://.png' == $url) {
-                        $this->logWarn('Logo URL contains default URL "https://.png"');
+                        $this->logWarning('Logo URL contains default URL "https://.png"');
 
                         return;
                     }
                     if (false === filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
-                        $this->logWarn(sprintf("Logo URL invalid Location [%s]", $url));
+                        $this->logWarning(sprintf("Logo URL invalid Location [%s]", $url));
 
                         return;
                     }
                     if (0 !== strpos($url, "https://")) {
-                        $this->logWarn(sprintf("Logo URL non SSL specified [%s]", $url));
+                        $this->logWarning(sprintf("Logo URL non SSL specified [%s]", $url));
 
                         return;
                     }
                     if (0 !== strpos($url, "https://static.surfconext.nl/media/")) {
-                        $this->logWarn(sprintf("Logo not located on static.surfconext.nl/media [%s]", $url));
+                        $this->logWarning(sprintf("Logo not located on static.surfconext.nl/media [%s]", $url));
 
                         return;
                     }

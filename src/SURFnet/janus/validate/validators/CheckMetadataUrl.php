@@ -46,20 +46,20 @@ class CheckMetadataUrl extends Validate implements ValidateInterface
     private function validateMetadataUrl(array $entityData)
     {
         if (!isset($entityData['metadataurl'])) {
-            $this->logWarn("no metadata URL");
+            $this->logWarning("no metadata URL");
 
             return;
         }
         $u = $entityData['metadataurl'];
 
         if (false === filter_var($u, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
-            $this->logWarn(sprintf("invalid metadata URL [%s]", $u));
+            $this->logWarning(sprintf("invalid metadata URL [%s]", $u));
 
             return;
         }
 
         if (0 !== strpos($u, "https://")) {
-            $this->logWarn(sprintf("non SSL metadata URL [%s]", $u));
+            $this->logWarning(sprintf("non SSL metadata URL [%s]", $u));
 
             return;
         }

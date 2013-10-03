@@ -32,7 +32,7 @@ class CheckNameEn extends Validate implements ValidateInterface
         $arp
     ) {
         if (!isset($metadata['name']['en'])) {
-            $this->logWarn("no english name set");
+            $this->logWarning("no english name set");
         }
     }
 
@@ -44,7 +44,7 @@ class CheckNameEn extends Validate implements ValidateInterface
         array $disableConsent
     ) {
         if (!isset($metadata['name']['en'])) {
-            $this->logWarn("no english name set");
+            $this->logWarning("no english name set");
         }
     }
 }

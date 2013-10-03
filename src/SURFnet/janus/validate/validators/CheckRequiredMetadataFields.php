@@ -100,7 +100,7 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
         $languages = $this->config->s("language")->toArray();
         foreach ($languages as $lang) {
             if (!isset($metadata[$keyToCheck][$lang])) {
-                $this->logWarn("no " . $keyToCheck . '[' . $lang . ']');
+                $this->logWarning("no " . $keyToCheck . '[' . $lang . ']');
 
             }
         }
@@ -119,7 +119,7 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
         }
         foreach ($metadata[$keyToCheck] as $language => $url) {
             if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-                $this->logWarn(sprintf("%s:%s  is not a valid URL [%s]", $keyToCheck, $language, $url));
+                $this->logWarning(sprintf("%s:%s  is not a valid URL [%s]", $keyToCheck, $language, $url));
             }
         }
     }
@@ -136,11 +136,11 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
         if (is_array($metadata[$keyToCheck])) {
             foreach ($metadata[$keyToCheck] as $language => $url) {
                 if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-                    $this->logWarn(sprintf("%s:%s  is not a valid URL [%s]", $keyToCheck, $language, $url));
+                    $this->logWarning(sprintf("%s:%s  is not a valid URL [%s]", $keyToCheck, $language, $url));
                 }
             }
         } elseif (filter_var($metadata[$keyToCheck], FILTER_VALIDATE_URL) === false) {
-            $this->logWarn(sprintf("%s  is not a valid URL [%s]", $keyToCheck, $metadata[$keyToCheck]));
+            $this->logWarning(sprintf("%s  is not a valid URL [%s]", $keyToCheck, $metadata[$keyToCheck]));
         }
 
     }
@@ -152,7 +152,7 @@ class CheckRequiredMetadataFields extends Validate implements ValidateInterface
     private function checkRequiredField(array $metadata, $keyToCheck)
     {
         if (!isset($metadata[$keyToCheck])) {
-            $this->logWarn("no " . $keyToCheck);
+            $this->logWarning("no " . $keyToCheck);
 
             return false;
         }

@@ -20,8 +20,9 @@ namespace SURFnet\janus\log;
 
 class EntityLog
 {
-    const WARN = 10;
-    const ERR  = 20;
+    const WARNING = 10;
+    const ERROR   = 20;
+    const FATAL   = 30;
 
     /** @var array */
     private $l;
@@ -34,14 +35,19 @@ class EntityLog
         );
     }
 
-    public function err(array $entity, $module, $message)
+    public function error(array $entity, $module, $message)
     {
-        $this->logEntry($entity, $module, $message, EntityLog::ERR);
+        $this->logEntry($entity, $module, $message, EntityLog::ERROR);
     }
 
-    public function warn(array $entity, $module, $message)
+    public function warning(array $entity, $module, $message)
     {
-        $this->logEntry($entity, $module, $message, EntityLog::WARN);
+        $this->logEntry($entity, $module, $message, EntityLog::WARNING);
+    }
+
+    public function fatal(array $entity, $module, $message)
+    {
+        $this->logEntry($entity, $module, $message, EntityLog::FATAL);
     }
 
     public function logEntry(array $entity, $module, $message, $level)

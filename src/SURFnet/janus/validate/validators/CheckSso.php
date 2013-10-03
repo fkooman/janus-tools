@@ -41,7 +41,7 @@ class CheckSso extends Validate implements ValidateInterface
         array $disableConsent
     ) {
         if (!isset($metadata['SingleSignOnService'])) {
-            $this->logWarn("no SingleSignOnService");
+            $this->logWarning("no SingleSignOnService");
 
             return;
         }
@@ -53,23 +53,23 @@ class CheckSso extends Validate implements ValidateInterface
     private function validateEndpoint($type, $k, array $v)
     {
         if (!isset($v['Location'])) {
-            $this->logWarn(sprintf("%s Location field missing [%s]", $type, $k));
+            $this->logWarning(sprintf("%s Location field missing [%s]", $type, $k));
 
             return;
         }
         if (false === filter_var($v['Location'], FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
-            $this->logWarn(sprintf("%s invalid Location [%s]", $type, $k));
+            $this->logWarning(sprintf("%s invalid Location [%s]", $type, $k));
 
             return;
         }
         if (0 !== strpos($v['Location'], "https://")) {
-            $this->logWarn(sprintf("%s non SSL Location specified [%s]", $type, $k));
+            $this->logWarning(sprintf("%s non SSL Location specified [%s]", $type, $k));
 
             return;
         }
 
         if (!isset($v['Binding'])) {
-            $this->logWarn(sprintf("%s Binding field missing [%s]", $type, $k));
+            $this->logWarning(sprintf("%s Binding field missing [%s]", $type, $k));
 
             return;
         }

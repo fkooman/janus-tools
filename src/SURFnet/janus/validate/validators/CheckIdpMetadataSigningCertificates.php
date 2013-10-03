@@ -63,7 +63,7 @@ class CheckIdpMetadataSigningCertificates extends Validate implements ValidateIn
                     }
                 }
                 if (!$found) {
-                    $this->logErr(
+                    $this->logError(
                         sprintf(
                             "signing cert '%s' from metadata URL valid from %s to %s not found in JANUS config",
                             $k->getName(),
@@ -75,7 +75,7 @@ class CheckIdpMetadataSigningCertificates extends Validate implements ValidateIn
             }
         } catch (ParserException $e) {
             // we were unable to parse the metadata
-            $this->logErr(sprintf("metadata from metadata URL '%s' not available or broken", $metadataUrl));
+            $this->logError(sprintf("metadata from metadata URL '%s' not available or broken", $metadataUrl));
         }
     }
 

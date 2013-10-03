@@ -49,7 +49,7 @@ class SurfCheckInstitutionGuestStatus extends Validate implements ValidateInterf
 
         if (!empty($metadata['coin']['institution_id'])) {
             if ('None' !== $metadata['coin']['guest_qualifier']) {
-                $this->logWarn('guest_qualifier is NOT "None"');
+                $this->logWarning('guest_qualifier is NOT "None"');
             }
         }
     }

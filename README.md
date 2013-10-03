@@ -60,9 +60,9 @@ parameters to the methods. If you are writing a filter only for IdPs or for SPs
 you can leave the body of the other type empty. You can write log entries 
 using for example:
 
-    $this->logWarn("sp must have arp");
+    $this->logWarning("sp must have arp");
     
-There is also the option to use `$this->logErr("msg");`. The context of the 
+There is also the option to use `$this->logError("msg");`. The context of the 
 entity is saved as well: the entity ID of the entity, the entity type, i.e.:
 `saml20-idp` or `saml20-sp` and the module that generates the message.
 

@@ -68,7 +68,7 @@ class CheckCertificates extends Validate implements ValidateInterface
             $c = new CertParser($c);
             $expiresAt = $c->getNotValidAfter();
             if (time() > $expiresAt) {
-                $this->logWarn(
+                $this->logWarning(
                     sprintf(
                         "certificate '%s' expired at %s [%s]",
                         $c->getName(),
@@ -77,7 +77,7 @@ class CheckCertificates extends Validate implements ValidateInterface
                     )
                 );
             } elseif (time() + self::EXPIRY_WARNING_TIME > $expiresAt) {
-                $this->logWarn(
+                $this->logWarning(
                     sprintf(
                         "certificate '%s' expires at %s [%s]",
                         $c->getName(),
@@ -87,7 +87,7 @@ class CheckCertificates extends Validate implements ValidateInterface
                 );
             }
         } catch (CertParserException $e) {
-            $this->logWarn(sprintf("%s [%s]", $e->getMessage(), $i));
+            $this->logWarning(sprintf("%s [%s]", $e->getMessage(), $i));
         }
     }
 }

@@ -32,7 +32,7 @@ class SurfCheckAllowAll extends Validate implements ValidateInterface
         $arp
     ) {
         if ("no" === $entityData['allowedall']) {
-            $this->logWarn("sp must have 'allowedall' set");
+            $this->logWarning("sp must have 'allowedall' set");
         }
     }
 
@@ -44,7 +44,7 @@ class SurfCheckAllowAll extends Validate implements ValidateInterface
         array $disableConsent
     ) {
         if ("yes" === $entityData['allowedall']) {
-            $this->logWarn("idp must not have 'allowedall' set");
+            $this->logWarning("idp must not have 'allowedall' set");
         }
     }
 }

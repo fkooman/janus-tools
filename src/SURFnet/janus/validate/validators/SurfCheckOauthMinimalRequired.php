@@ -33,10 +33,10 @@ class SurfCheckOauthMinimalRequired extends Validate implements ValidateInterfac
             if (isset($metadata['coin']['oauth'])) {
                 // $this->checkKey($metadata['coin']['oauth']);
             } else {
-                $this->logErr('No oauth metadata"');
+                $this->logError('No oauth metadata"');
             }
         } else {
-            $this->logErr('No coin metadata"');
+            $this->logError('No coin metadata"');
         }
     }
 
@@ -57,11 +57,11 @@ class SurfCheckOauthMinimalRequired extends Validate implements ValidateInterfac
     {
         if (isset($oauth['consumer_key'])) {
             if (!$this->isRegex('consumer_key')) {
-                $this->logWarn("Consumer Key is not a regular expression");
+                $this->logWarning("Consumer Key is not a regular expression");
             }
 
         } else {
-            $this->logErr('No consumer key');
+            $this->logError('No consumer key');
         }
     }
 

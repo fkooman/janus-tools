@@ -64,7 +64,7 @@ class SurfCheckNonLocalhost extends Validate implements ValidateInterface
     {
         if (isset($entityData['entityid'])) {
             if (strpos($entityData['entityid'], 'localhost') !== false) {
-                $this->logWarn("EntityID contains 'localhost'");
+                $this->logWarning("EntityID contains 'localhost'");
             }
         }
     }

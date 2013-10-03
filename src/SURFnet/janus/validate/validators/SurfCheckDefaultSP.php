@@ -55,7 +55,7 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
                 $blockedEntities
             );
         } else {
-            $this->logErr("Guest Qualifier not set");
+            $this->logError("Guest Qualifier not set");
         }
     }
 
@@ -90,10 +90,10 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
     ) {
         foreach ($requiredSpsPerStatus as $rSP) {
             if (!in_array($rSP, $allowedEntities)) {
-                $this->logWarn(sprintf("Required SP is not allowed (ACL): %s", $rSP));
+                $this->logWarning(sprintf("Required SP is not allowed (ACL): %s", $rSP));
             }
             if (in_array($rSP, $blockedEntities)) {
-                $this->logWarn(sprintf("Required SP is blocked (ACL): %s", $rSP));
+                $this->logWarning(sprintf("Required SP is blocked (ACL): %s", $rSP));
             }
         }
     }
@@ -108,7 +108,7 @@ class SurfCheckDefaultSP extends Validate implements ValidateInterface
     ) {
         foreach ($disallowedSpsPerStatus as $dSP) {
             if (in_array($dSP, $allowedEntities)) {
-                $this->logWarn(sprintf("Disallowed SP is allowed (ACL): %s", $dSP));
+                $this->logWarning(sprintf("Disallowed SP is allowed (ACL): %s", $dSP));
             }
         }
     }

@@ -53,7 +53,7 @@ class SurfCheckAclContainsOnlyOwnStateSps extends Validate implements ValidateIn
                 if ($e['entityData']['type'] == "saml20-sp") {
                     if ($e['entityData']['entityid'] == $allowedEntity) {
                         if ($e['entityData']['state'] !== $ownState) {
-                            $this->logWarn(
+                            $this->logWarning(
                                 "ACL contains entity which is not in " . $ownState . " state [" . $allowedEntity . "]"
                             );
                         }

@@ -33,10 +33,10 @@ class SurfCheckOauthMinimalRequired extends Validate implements ValidateInterfac
             if (isset($metadata['coin']['oauth'])) {
                 // $this->checkKey($metadata['coin']['oauth']);
             } else {
-                $this->logError('No oauth metadata"');
+                $this->logError('No oauth metadata');
             }
         } else {
-            $this->logError('No coin metadata"');
+            $this->logError('No coin metadata');
         }
     }
 

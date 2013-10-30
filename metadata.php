@@ -30,7 +30,7 @@ try {
     $metadataDir    = $config->s('output')->l('metadataDir', true); // REQ
 
     // remove all files from metadataDir
-    foreach (glob($metadataDir . "/*") as $f) {
+    foreach (glob($metadataDir . "/*.xml") as $f) {
         unlink($f);
     }
 
@@ -43,6 +43,8 @@ try {
 
     foreach ($entities as $type => $entity) {
         $metadataUrl = $entity['entityData']['metadataurl'];
+
+        echo "'" . $metadataUrl . "'" . PHP_EOL;
 
         // create a hashed file name
         $fileName = $metadataDir . DIRECTORY_SEPARATOR . md5($metadataUrl) . ".xml";

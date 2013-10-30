@@ -7,6 +7,11 @@ dsn="mysql:host=localhost;dbname=janus"
 ;user="user"
 ;pass="s3cr3t"
 
+[mail]
+from="devnull@example.org"
+to[]="foo@example.org"
+to[]="bar@example.org"
+
 [output]
 ; where to write the export dump to (export.php)
 exportDir="/PATH/TO/DIR/export"

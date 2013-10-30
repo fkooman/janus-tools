@@ -32,6 +32,12 @@ If you want to view the export in a formatted way you can use Python:
 
     $ cat export/export.json | python -mjson.tool | less
     
+## Metadata
+You can fetch the metadata from the metadata URLs available from the export
+data. 
+
+    $ php metadata.php
+
 ## Validation
 You can validate the export you just made using `validate.php`.
 
@@ -48,6 +54,13 @@ this.
 You can also use Python here to view the log somewhat formatted:
 
     $ cat export/log.json | python -mjson.tool
+
+## Mail
+In order to mail errors to email you can run the `mail.php` script:
+
+    $ php mail.php
+
+You can configure the addresses in `config/config.ini`.
 
 # Validation Filters
 You can add your own validation filters to 

@@ -57,12 +57,12 @@ try {
     // Create the Mailer using your created Transport
     $mailer = Swift_Mailer::newInstance($transport);
 
-    if($mailer->send($message)) {
+    if ($mailer->send($message)) {
         echo "OK" . PHP_EOL;
     } else {
         echo "FAIL" . PHP_EOL;
     }
-      
+
 } catch (Exception $e) {
     echo sprintf("ERROR: %s", $e->getMessage());
     die(PHP_EOL);

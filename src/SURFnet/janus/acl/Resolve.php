@@ -27,6 +27,28 @@ class Resolve
         }
     }
 
+    public function idpAclDump($requireStateMatch = false)
+    {
+        $idpAcl = array();
+        foreach ($this->idpEntityIds as $idpEntityId) {
+            //echo "[idp] " . $idpEntityId . PHP_EOL;
+            $idpAcl[$idpEntityId] = $this->aclAllowedSps($idpEntityId, $requireStateMatch);
+        }
+
+        return $idpAcl;
+    }
+
+    public function spAclDump($requireStateMatch = false)
+    {
+        $spAcl = array();
+        foreach ($this->spEntityIds as $spEntityId) {
+            //echo "[sp] " . $spEntityId . PHP_EOL;
+            $spAcl[$spEntityId] = $this->aclAllowedIdps($spEntityId, $requireStateMatch);
+        }
+
+        return $spAcl;
+    }
+
     public function aclAllowedSps($idpEntityId, $requireStateMatch = false)
     {
         $allowedSps = array();

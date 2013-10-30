@@ -65,9 +65,15 @@ try {
 function fetchMetadata($metadataUrl)
 {
     try {
-        $client = new Client($metadataUrl, array(
-            'curl.options'   => array(CURLOPT_CONNECTTIMEOUT => 10, CURLOPT_TIMEOUT => 15),
-        ));
+        $client = new Client(
+            $metadataUrl,
+            array(
+                'curl.options' => array(
+                    CURLOPT_CONNECTTIMEOUT => 10,
+                    CURLOPT_TIMEOUT => 15
+                ),
+            )
+        );
         $request = $client->get();
         $response = $request->send();
 

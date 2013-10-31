@@ -41,7 +41,10 @@ try {
         "saml20-sp" => $aclResolve->spAclDump(true)
     );
 
-    echo json_encode($aclDump);
+    $outputFile = $exportDir . DIRECTORY_SEPARATOR . "acl.json";
+    if (false === @file_put_contents($outputFile, json_encode($aclDump))) {
+        throw new Exception(sprintf("unable to write JSON file '%s' to disk", $outputFile));
+    }
 } catch (Exception $e) {
     echo sprintf("ERROR: %s", $e->getMessage());
     die(PHP_EOL);

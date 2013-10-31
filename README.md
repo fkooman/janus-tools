@@ -55,6 +55,13 @@ You can also use Python here to view the log somewhat formatted:
 
     $ cat export/log.json | python -mjson.tool
 
+## ACL
+You can generate the ACL as JSON using the ACL tool:
+
+    $ php aclDump.php
+
+This will write the `acl.json` file to the export directory.
+
 ## Mail
 In order to mail errors to email you can run the `mail.php` script:
 

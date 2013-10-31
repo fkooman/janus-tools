@@ -24,6 +24,7 @@ try {
 
     // data directory
     $exportDir      = $config->s('output')->l('exportDir', true); // REQ
+    $aclDir         = $config->s('output')->l('aclDir', true); // REQ
 
     $timezone       = $config->l('timezone', false, "Europe/Amsterdam");
     date_default_timezone_set($timezone);
@@ -41,7 +42,7 @@ try {
         "saml20-sp" => $aclResolve->spAclDump(true)
     );
 
-    $outputFile = $exportDir . DIRECTORY_SEPARATOR . "acl.json";
+    $outputFile = $aclDir . DIRECTORY_SEPARATOR . "acl.json";
     if (false === @file_put_contents($outputFile, json_encode($aclDump))) {
         throw new Exception(sprintf("unable to write JSON file '%s' to disk", $outputFile));
     }

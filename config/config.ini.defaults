@@ -19,6 +19,8 @@ exportDir="/PATH/TO/DIR/export"
 logDir="/PATH/TO/DIR/log"
 ; where to write the metadata cache (metadata.php)
 metadataDir="/PATH/TO/DIR/metadata"
+; where to write the ACL file (aclDump.php)
+aclDir="/PATH/TO/DIR/export"
 
 ; choose the workflow states of entries in JANUS to export, if you select none
 ; all entries will be exported

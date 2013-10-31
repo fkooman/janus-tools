@@ -7,30 +7,20 @@ class Resolve
     /** @var array */
     private $entities;
 
-    private $idpEntityIds;
-    private $spEntityIds;
-
     public function __construct(array $entities)
     {
-        $this->entities = $entities;
-
-        $this->idpEntityIds = array();
-        $this->spEntityIds = array();
-
+        $this->entities = array();
         foreach ($entities as $e) {
-            if ("saml20-idp" === $e['entityData']['type']) {
-                $this->idpEntityIds[] = $e['entityData']['entityid'];
-            }
-            if ("saml20-sp" === $e['entityData']['type']) {
-                $this->spEntityIds[] = $e['entityData']['entityid'];
-            }
+            $type = $e['entityData']['type'];
+            $entityId = $e['entityData']['entityid'];
+            $this->entities[$type][$entityId] = $e;
         }
     }
 
     public function idpAclDump($requireStateMatch = false)
     {
         $idpAcl = array();
-        foreach ($this->idpEntityIds as $idpEntityId) {
+        foreach (array_keys($this->entities['saml20-idp']) as $idpEntityId) {
             //echo "[idp] " . $idpEntityId . PHP_EOL;
             $idpAcl[$idpEntityId] = $this->aclAllowedSps($idpEntityId, $requireStateMatch);
         }
@@ -41,7 +31,7 @@ class Resolve
     public function spAclDump($requireStateMatch = false)
     {
         $spAcl = array();
-        foreach ($this->spEntityIds as $spEntityId) {
+        foreach (array_keys($this->entities['saml20-sp']) as $spEntityId) {
             //echo "[sp] " . $spEntityId . PHP_EOL;
             $spAcl[$spEntityId] = $this->aclAllowedIdps($spEntityId, $requireStateMatch);
         }
@@ -52,7 +42,7 @@ class Resolve
     public function aclAllowedSps($idpEntityId, $requireStateMatch = false)
     {
         $allowedSps = array();
-        foreach ($this->spEntityIds as $spEntityId) {
+        foreach (array_keys($this->entities['saml20-sp']) as $spEntityId) {
             if ($this->aclAllowedByEntityId($idpEntityId, $spEntityId, $requireStateMatch)) {
                 $allowedSps[] = $spEntityId;
             }
@@ -64,7 +54,7 @@ class Resolve
     public function aclAllowedIdps($spEntityId, $requireStateMatch = false)
     {
         $allowedIdps = array();
-        foreach ($this->idpEntityIds as $idpEntityId) {
+        foreach (array_keys($this->entities['saml20-idp']) as $idpEntityId) {
             if ($this->aclAllowedByEntityId($idpEntityId, $spEntityId, $requireStateMatch)) {
                 $allowedIdps[] = $idpEntityId;
             }
@@ -75,30 +65,19 @@ class Resolve
 
     public function aclAllowedByEntityId($idpEntityId, $spEntityId, $requireStateMatch = false)
     {
-        $idpEntity = false;
-        $spEntity = false;
-
-        foreach ($this->entities as $k => $v) {
-            if ("saml20-idp" === $v['entityData']['type']) {
-                if ($idpEntityId === $v['entityData']['entityid']) {
-                    $idpEntity = $v;
-                }
-            }
-            if ("saml20-sp" === $v['entityData']['type']) {
-                if ($spEntityId === $v['entityData']['entityid']) {
-                    $spEntity = $v;
-                }
-            }
-        }
-
-        if (false === $idpEntity) {
-            return false;
-        }
-        if (false === $spEntity) {
+        if (!array_key_exists($idpEntityId, $this->entities['saml20-idp'])) {
             return false;
         }
 
-        return $this->aclAllowedByEntity($idpEntity, $spEntity, $requireStateMatch);
+        if (!array_key_exists($spEntityId, $this->entities['saml20-sp'])) {
+            return false;
+        }
+
+        return $this->aclAllowedByEntity(
+            $this->entities['saml20-idp'][$idpEntityId],
+            $this->entities['saml20-sp'][$spEntityId],
+            $requireStateMatch
+        );
     }
 
     // FIXME: figure out how to implement blockedEntities

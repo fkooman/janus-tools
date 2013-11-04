@@ -15,34 +15,56 @@ class Ssp
 
     public function __construct(array $entities, array $acl)
     {
-        foreach ($entities as $index => $entity) {
+        $this->idp = array();
+        $this->sp = array();
+
+        foreach ($entities as $entity) {
             foreach ($entity['entityData'] as $k => $v) {
-                $entity[$k] = $v;
+                if (!array_key_exists($k, $entity)) {
+                    $entity[$k] = $v;
+                }
             }
             foreach ($entity['metadata'] as $k => $v) {
-                $entity[$k] = $v;
+                if (!array_key_exists($k, $entity)) {
+                    $entity[$k] = $v;
+                }
             }
+
+            if (array_key_exists('disableConsent', $entity)) {
+                $entity['consent.disable'] = $entity['disableConsent'];
+            }
+
+            unset($entity['entityData']);
+            unset($entity['metadata']);
+            unset($entity['allowedEntities']);
+            unset($entity['blockedEntities']);
+            unset($entity['disableConsent']);
 
             $type = $entity['type'];
             if ("saml20-idp" === $type) {
-                $this->idp[$index] = $entity;
+                $this->idp[] = $entity;
             }
             if ("saml20-sp" === $type) {
                 $entityId = $entity['entityid'];
-                $this->sp[$index] = $entity;
-                // add ACL
-                $this->sp[$index]['IDPList'] = $acl['saml20-sp'][$entityId];
+                $entity['IDPList'] = $acl['saml20-sp'][$entityId];
+                if (array_key_exists('arp', $entity) && is_array($entity['arp'])) {
+                    $entity['attributes'] = array_keys($entity['arp']);
+                    unset($entity['arp']);
+                } else {
+                    $entity['attributes'] = array();
+                }
+                $this->sp[] = $entity;
             }
         }
     }
 
     public function getIdps()
     {
-        return $this->idp;
+        return array_values($this->idp);
     }
 
     public function getSps()
     {
-        return $this->sp;
+        return array_values($this->sp);
     }
 }

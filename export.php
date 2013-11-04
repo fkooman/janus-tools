@@ -44,6 +44,10 @@ try {
         $entityData = array_merge($entityData, $e->getEntities("saml20-sp", $state));
     }
 
+    $sanitizer = new SURFnet\janus\export\Sanitizer($entityData);
+    $sanitizer->sanitizeAll();
+    $entityData = $sanitizer->getEntityData();
+
     $outputFile = $dirName . DIRECTORY_SEPARATOR . "export.json";
     if (false === @file_put_contents($outputFile, json_encode($entityData))) {
         throw new Exception(sprintf("unable to write JSON file '%s' to disk", $outputFile));

@@ -62,6 +62,15 @@ You can generate the ACL as JSON using the ACL tool:
 
 This will write the `acl.json` file to the export directory.
 
+## Convert to simpleSAMLphp
+The `export.json` file can be converted to a simpleSAMLphp compatible file by
+running the `convert.php` script:
+
+    $ php convert.php
+
+It will write two files: `saml20-idp-remote.json` and `saml20-sp-remote.json`
+containing the IdP and SP configuration.
+
 ## Mail
 In order to mail errors to email you can run the `mail.php` script:
 

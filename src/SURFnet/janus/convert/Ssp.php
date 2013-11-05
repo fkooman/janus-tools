@@ -30,6 +30,8 @@ class Ssp
         $this->moveEntityData();
         $this->moveMetadata();
 
+        $this->convertToUIInfo();
+
         $this->segregateEntities();
 
         $this->addAcl();
@@ -37,7 +39,6 @@ class Ssp
         $this->fixDisableConsentIdp();
         $this->fixDisableConsentSp();
 
-        //$this->convertToUIInfo();
     }
 
     /**
@@ -126,50 +127,111 @@ class Ssp
 
     private function convertToUIInfo()
     {
-        // some keys belong in UIInfo (under a different name)
-        foreach ($entities as $eid => $metadata) {
+        foreach ($this->entities as $index => $entity) {
             $uiInfo = array();
             $discoHints = array();
 
-            if (array_key_exists("displayName", $metadata)) {
-                $uiInfo['DisplayName'] = $metadata['displayName'];
-                unset($entities[$eid]['displayName']);
+            // displayname
+            if (array_key_exists("displayName", $entity)) {
+                $uiInfo['DisplayName'] = $entity['displayName'];
+                unset($this->entities[$index]['displayName']);
             }
-            if (array_key_exists("keywords", $metadata)) {
-                foreach ($metadata['keywords'] as $language => $keywords) {
-                    $filteredKeywords = filterKeywords($keywords);
+
+            // keywords
+            if (array_key_exists("keywords", $entity)) {
+                foreach ($entity['keywords'] as $language => $keywords) {
+                    $filteredKeywords = $this->filterKeywords($keywords);
                     if (0 !== count($filteredKeywords)) {
                         $uiInfo['Keywords'][$language] = $filteredKeywords;
                     }
                 }
-                unset($entities[$eid]['keywords']);
+                unset($this->entities[$index]['keywords']);
             }
-            if (array_key_exists("geoLocation", $metadata)) {
-                $geo = validateGeo($metadata['geoLocation']);
+
+            // geo location
+            if (array_key_exists("geoLocation", $entity)) {
+                $geo = $this->validateGeo($entity['geoLocation']);
                 if (FALSE !== count($geo)) {
                     $discoHints['GeolocationHint'] = array($geo);
-                } else {
-                    _l($metadata, "WARNING", "invalid GeolocationHint");
                 }
-                unset($entities[$eid]['geoLocation']);
+                unset($this->entities[$index]['geoLocation']);
             }
-            if (array_key_exists("logo", $metadata)) {
-                $errorMessage = array();
-                $logo = validateLogo($metadata["logo"][0], $errorMessage);
-                if (FALSE !== $logo) {
-                    $uiInfo['Logo'] = array($logo);
-                } else {
-                    _l($metadata, "WARNING", "invalid Logo configuration (" . implode(", ", $errorMessage) . ")");
+
+            // logo
+            if (array_key_exists("logo", $entity)) {
+
+                $url = isset($entity['logo'][0]['url']) ? $entity['logo'][0]['url'] : null;
+                $width = isset($entity['logo'][0]['width']) ? intval($entity['logo'][0]['width']) : null;
+                $height = isset($entity['logo'][0]['height']) ? intval($entity['logo'][0]['height']) : null;
+
+                $logo = array();
+                if (null !== $url) {
+                    $logo['url'] = $url;
                 }
-                unset($entities[$eid]['logo']);
+                if (null !== $width) {
+                    $logo['width'] = $width;
+                }
+                if (null !== $height) {
+                    $logo['height'] = $height;
+                }
+                $uiInfo['Logo'] = array($logo);
+                unset($this->entities[$index]['logo']);
             }
             if (0 !== count($uiInfo)) {
-                $entities[$eid]['UIInfo'] = $uiInfo;
+                $this->entities[$index]['UIInfo'] = $uiInfo;
             }
             if (0 !== count($discoHints)) {
-                $entities[$eid]['DiscoHints'] = $discoHints;
+                $this->entities[$index]['DiscoHints'] = $discoHints;
             }
         }
+    }
+
+    private function validateGeo($geoHints)
+    {
+        if (!empty($geoHints)) {
+            $e = explode(",", $geoHints);
+            if (2 !== count($e) && 3 !== count($e)) {
+                return false;
+            }
+            if (2 === count($e)) {
+                list($lat, $lon) = $e;
+                $lat = trim($lat);
+                $lon = trim($lon);
+
+                return "geo:$lat,$lon";
+            }
+            if (3 === count($e)) {
+                list($lat, $lon, $alt) = $e;
+                $lat = trim($lat);
+                $lon = trim($lon);
+                $alt = trim($alt);
+
+                return "geo:$lat,$lon,$alt";
+            }
+        }
+    }
+
+    private function filterKeywords($keywords)
+    {
+        $keywordsArray = explode(" ", $keywords);
+        foreach ($keywordsArray as $k) {
+            $keywordsArray = array_filter($keywordsArray, function ($v) {
+                if (empty($v)) {
+                    return false;
+                }
+                if (false !== strpos($v, "+")) {
+                    return false;
+                }
+                if ($v !== htmlentities($v)) {
+                    return false;
+                }
+
+                return true;
+            });
+        }
+        sort($keywordsArray);
+
+        return array_values(array_unique($keywordsArray));
     }
 
     public function getIdps()

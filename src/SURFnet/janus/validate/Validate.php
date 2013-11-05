@@ -66,7 +66,7 @@ abstract class Validate implements ValidateInterface
                             $e['metadata'],
                             $e['allowedEntities'],
                             $e['blockedEntities'],
-                            $e['arp']
+                            $e['attributes']
                         );
                     }
                     break;

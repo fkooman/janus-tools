@@ -187,7 +187,7 @@ EOF;
 
         // arp (SP only)
         if ("saml20-sp" === $type) {
-            $entity['arp'] = $this->getArp($entity['entityData']['arp']);
+            $entity['attributes'] = $this->getArp($entity['entityData']['arp']);
         }
 
         return $entity;

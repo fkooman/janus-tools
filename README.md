@@ -78,6 +78,15 @@ In order to mail errors to email you can run the `mail.php` script:
 
 You can configure the addresses in `config/config.ini`.
 
+# Cron
+In order to automatically run the scripts, the following cron is suggested:
+
+    33 3 * * * php /home/fkooman/janus-tools/metadata.php
+    0 * * * * php /home/fkooman/janus-tools/export.php && php /home/fkooman/janus-tools/validate.php >/dev/null && php /home/fkooman/janus-tools/aclDump.php
+
+This will run the most scripts every hour, and the metadata fetching at 3:33 AM 
+which gives it half an hour to complete before the other scripts run again. 
+
 # Validation Filters
 You can add your own validation filters to 
 `src/SURFnet/janus/validate/validators`. Copy one of the other validators to 

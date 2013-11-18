@@ -14,10 +14,16 @@
     "description": "Application to export JANUS metadata to JSON",
     "license": "Apache-2.0",
     "name": "surfnet/janus-tools",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/frkosurf/php-saml-metadata-parser"
+        }
+    ],
     "require": {
         "fkooman/php-cert-parser": "0.1.*",
         "fkooman/php-lib-config": "0.2.*",
-        "fkooman/php-saml-metadata-parser": "0.1.*",
+        "frkosurf/php-saml-metadata-parser": "0.1.*",
         "guzzle/guzzle": "3.7.*",
         "php": ">=5.3.3",
         "swiftmailer/swiftmailer": "5.0.*"

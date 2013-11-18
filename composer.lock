@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a0a74744627b5010b4db9686e5cc2c84",
+    "hash": "ef323cc5137aba7c607af0f3675e6278",
     "packages": [
         {
             "name": "fkooman/php-cert-parser",
@@ -120,16 +120,16 @@
             "time": "2013-11-07 15:48:53"
         },
         {
-            "name": "fkooman/php-saml-metadata-parser",
+            "name": "frkosurf/php-saml-metadata-parser",
             "version": "0.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fkooman/php-saml-metadata-parser.git",
+                "url": "https://github.com/frkosurf/php-saml-metadata-parser.git",
                 "reference": "1bdf1e0e57668b0052f30bf96421f91a9e128b71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-saml-metadata-parser/zipball/1bdf1e0e57668b0052f30bf96421f91a9e128b71",
+                "url": "https://api.github.com/repos/frkosurf/php-saml-metadata-parser/zipball/1bdf1e0e57668b0052f30bf96421f91a9e128b71",
                 "reference": "1bdf1e0e57668b0052f30bf96421f91a9e128b71",
                 "shasum": ""
             },
@@ -143,10 +143,13 @@
                     "fkooman\\saml\\metadata\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
+            "support": {
+                "source": "https://github.com/frkosurf/php-saml-metadata-parser/tree/0.1.2",
+                "issues": "https://github.com/frkosurf/php-saml-metadata-parser/issues"
+            },
             "time": "2013-08-14 09:37:28"
         },
         {

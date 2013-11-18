@@ -47,7 +47,7 @@ try {
         }
     }
 
-    $message = Swift_Message::newInstance('JANUS Log');
+    $message = Swift_Message::newInstance(sprintf('[%s] JANUS Log', date("Y-m-d H:i:s")));
     $message->setBody($mailContent)->setFrom($mailFrom)->setTo($mailTo);
     // echo $message->toString();
 

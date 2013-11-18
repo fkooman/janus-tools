@@ -276,7 +276,7 @@ EOF;
                         $metadata[$e[0]][$e[1]][$e[2]] = $v;
                         unset($metadata[$k]);
                     } elseif (4 === count($e)) {
-                        $metadata[$e[0]][$e[1]][$e[2]][$e[4]] = $v;
+                        $metadata[$e[0]][$e[1]][$e[2]][$e[3]] = $v;
                         unset($metadata[$k]);
                     } else {
                         throw new ExportException("unsupported array depth in metadata");

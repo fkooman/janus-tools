@@ -25,44 +25,46 @@ try {
 
     $mailContent = sprintf('Generated at %s' . PHP_EOL, date("r", time()));
 
-    $mailContent .= PHP_EOL . '**** IdPs *****' . PHP_EOL;
+    $mailMessages = array(
+        "idp" => array(),
+        "sp" => array()
+    );
 
     foreach ($logData['saml20-idp'] as $entityid => $entity) {
         foreach ($entity['messages'] as $m) {
             if (EntityLog::ERROR === $m['level']) {
-                $mailContent .= $entityid . PHP_EOL;
-                $mailContent .= '    ' . $m['message'] . PHP_EOL;
+                $mailMessages['idp'][$entityid] = $m['message'] . PHP_EOL;
             }
         }
     }
-
-    $mailContent .= PHP_EOL . '**** SPs *****' . PHP_EOL;
-
     foreach ($logData['saml20-sp'] as $entityid => $entity) {
         foreach ($entity['messages'] as $m) {
             if (EntityLog::ERROR === $m['level']) {
-                $mailContent .= $entityid . PHP_EOL;
-                $mailContent .= '    ' . $m['message'] . PHP_EOL;
+                $mailMessages['sp'][$entityid] = $m['message'] . PHP_EOL;
             }
         }
     }
 
-    $message = Swift_Message::newInstance(sprintf('[%s] JANUS Log', date("Y-m-d H:i:s")));
-    $message->setBody($mailContent)->setFrom($mailFrom)->setTo($mailTo);
-    // echo $message->toString();
-
-    // Create the Transport
     $transport = Swift_SendmailTransport::newInstance();
-
-    // Create the Mailer using your created Transport
     $mailer = Swift_Mailer::newInstance($transport);
 
-    if ($mailer->send($message)) {
-        echo "OK" . PHP_EOL;
-    } else {
-        echo "FAIL" . PHP_EOL;
+    foreach ($mailMessages['idp'] as $entityid => $mailContent) {
+        $message = Swift_Message::newInstance(sprintf('JANUS Log IdP [%s]', $entityid));
+        $message->setBody($mailContent)->setFrom($mailFrom)->setTo($mailTo);
+        // echo $message->toString();
+        if (!$mailer->send($message)) {
+            echo "FAIL" . PHP_EOL;
+        }
     }
 
+    foreach ($mailMessages['sp'] as $entityid => $mailContent) {
+        $message = Swift_Message::newInstance(sprintf('JANUS Log SP [%s]', $entityid));
+        $message->setBody($mailContent)->setFrom($mailFrom)->setTo($mailTo);
+        // echo $message->toString();
+        if (!$mailer->send($message)) {
+            echo "FAIL" . PHP_EOL;
+        }
+    }
 } catch (Exception $e) {
     echo sprintf("ERROR: %s", $e->getMessage());
     die(PHP_EOL);

@@ -83,9 +83,12 @@ In order to automatically run the scripts, the following cron is suggested:
 
     33 3 * * * php /home/fkooman/janus-tools/metadata.php
     0 * * * * php /home/fkooman/janus-tools/export.php && php /home/fkooman/janus-tools/validate.php >/dev/null && php /home/fkooman/janus-tools/aclDump.php
+    0 4 * * mon php /home/fkooman/janus-tools/mail.php >/dev/null
 
 This will run the most scripts every hour, and the metadata fetching at 3:33 AM 
-which gives it half an hour to complete before the other scripts run again. 
+which gives it half an hour to complete before the other scripts run again. In
+addition this will once a week, on Monday morning at 4am mail a log to the 
+configured addresses in `config/config.ini`.
 
 # Validation Filters
 You can add your own validation filters to 

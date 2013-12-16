@@ -18,8 +18,14 @@ your setup, i.e.: set the database information and (export) paths. See the
 explanation included in the template `config.ini.defaults` on what everything
 means.
 
-Do not forget to create the `export` directory, it needs to exist and be
+Do not forget to create the followings directory, these needs to exist and be
 configured in `config/config.ini`!
+- export
+- log
+- metadata
+- acl
+- convert
+(It is possible to use the same directory for exportDir, logDir, metadataDir, aclDir and convertDir)
 
 # Usage
 

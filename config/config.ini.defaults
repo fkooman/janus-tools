@@ -43,17 +43,86 @@ validate[] = "CheckMetadataUrl"
 validate[] = "CheckIdpMetadataSigningCertificates"
 validate[] = "CheckRequiredMetadataFields"
 ;validate[] = "SurfCheckOauthMinimalRequired"
+;; SP must have ACL set to Allow All, IdP must not have ACL set to Allow All
 ;validate[] = "SurfCheckAllowAll"
+;; SPs must have an ARP
 ;validate[] = "SurfCheckArp"
+;; SurfCheckDefaultSP, see below
 ;validate[] = "SurfCheckDefaultSP"
+;; Logo URL must start with: https://static.surfconext.nl/media/
 ;validate[] = "SurfCheckLogoUrl"
+;; If institution_id is set then guest_qualifier may not be "None"
 ;validate[] = "SurfCheckInstitutionGuestStatus"
+;; SP EntityID may not contain "localhost"
 ;validate[] = "SurfCheckNonLocalhost"
+;; An production IdP may not have a test SP in the ACL. A test IdP may not have a production SP in the ACL.
 ;validate[] = "SurfCheckAclContainsOnlyOwnStateSps"
 
-; validator specific configuration
+;; validator specific configuration
 ;[CheckNameEn]
-; the ignoreIdp and ignoreSp arrays are evaluated for *ALL* modules, this means
-; that for that particular entityid no validation is done for that module
+;; the ignoreIdp and ignoreSp arrays are evaluated for *ALL* modules, this means
+;; that for that particular entityid no validation is done for that module
 ;ignoreIdp[] = "http://idp.example.org/saml"
 ;ignoreSp[]  = "http://sp.example.org/saml"
+
+;; validator to check if the required Metadata fields is set
+;; Per IdP and SP there is a check for the existence of the field and a check is the value is an URL
+;; Both check can be verified multi-language
+;[CheckRequiredMetadataFields]
+;; For the multi-language checks which languages are supported and must be check for existence
+;language[] = "en"
+;language[] = "nl"
+
+;; IdP checks
+;; Check existence of Field
+;requiredIdpField[] = "certData"
+;; Check existence of Field with multiple language
+;requiredIdpLangField[] = "name"
+;; check existence of Field and value must be an URL
+;requiredIdpUrl[] = "OrganizationURL"
+;; check existence of Field and value must be an URL with multiple language
+;requiredIdpLangUrl[] = "OrganizationURL"
+
+;; SP checks
+;; Check existence of Field
+;requiredSpField[] = "certData"
+;; Check existence of Field with multiple language
+;requiredSpLangField[] = "name"
+;; check existence of Field and value must be an URL
+;requiredSpUrl[] = "OrganizationURL"
+;; check existence of Field and value must be an URL with multiple language
+;requiredSpLangUrl[] = "url"
+
+
+
+; Check for required fields for both SP and IdP
+;[CheckRequiredMetadataFields]
+;language[] = "en"
+;language[] = "nl"
+;
+;requiredIdpField[] = "certData"
+;requiredIdpLangField[] = "name"
+;requiredIdpLangUrl[] = "OrganizationURL"
+;
+;requiredSpField[] = "certData"
+;requiredSpLangField[] = "name"
+;requiredSpLangUrl[] = "url"
+
+
+; Some IdPs must have access to some default SPs, while other IdPs must not have access to these SPs.
+; Syntax: ["require"|"disallowed"]:"guest"+guest_qualifier:state = sp_entityid
+;
+; "require" = All IdPs with "guest"+guest_qualifier and state must have the sp_entityid in the Access Control List
+; "disallowed" = All IdPs with "guest"+guest_qualifier and state must not have the sp_entityid in the Access Control List
+; "guest":guest_qualifier = the literal string "guest" concatenated with the value of guest_qualifier.
+;     guest_qualifier can be: "All", "Some" or "None"
+; state = the workflow state in the Janus export
+;[SurfCheckDefaultSP]
+;ignoreIdp[] = "http://idp.example.org/saml"
+;require:guestNone:prodaccepted[] = "http://sp.required.example.org/saml"
+;require:guestNone:testaccepted[] = "http://sp.required.test.example.org/saml"
+;disallowed:guestNone:prodaccepted[] = "http://sp.guest.example.org/saml"
+
+;require:guestAll:prodaccepted[] = "http://sp.required.example.org/saml"
+;require:guestAll:prodaccepted[] = "http://sp.guest.example.org/saml"
+;disallowed:guestAll:prodaccepted[]] = "http://sp.surfnet.example.org/saml"

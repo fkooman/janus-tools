@@ -21,8 +21,8 @@ namespace SURFnet\janus\log;
 class EntityLog
 {
     const WARNING = 10;
-    const ERROR   = 20;
-    const FATAL   = 30;
+    const ERROR = 20;
+    const FATAL = 30;
 
     /** @var array */
     private $l;
@@ -59,10 +59,12 @@ class EntityLog
         $name = isset($entity['metadata']['name']['en']) ? $entity['metadata']['name']['en'] : $entityId;
 
         if (!array_key_exists($entityId, $this->l[$type])) {
+            $techContacts = $this->getTechContacts($entity);
             $this->l[$type][$entityId] = array(
                 "name" => $name,
                 "eid" => $eid,
                 "state" => $state,
+                "contacts" => $techContacts,
                 "messages" => array()
             );
         }
@@ -81,5 +83,20 @@ class EntityLog
         $this->l['generatedAt'] = date("r", time());
 
         return json_encode($this->l);
+    }
+
+    private function getTechContacts($entity)
+    {
+        $tc = array();
+        if (isset($entity['metadata']) && isset($entity['metadata']['contacts'])) {
+            foreach ($entity['metadata']['contacts'] as $c) {
+                if (isset($c['contactType']) && $c['contactType'] == 'technical') {
+                    if (isset($c['emailAddress'])) {
+                        $tc[]['email'] = $c['emailAddress'];
+                    }
+                }
+            }
+        }
+        return $tc;
     }
 }

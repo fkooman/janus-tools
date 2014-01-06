@@ -37,10 +37,10 @@ You can run the `export.php` script after you configured everything.
 If you want to view the export in a formatted way you can use Python:
 
     $ cat export/export.json | python -mjson.tool | less
-    
+
 ## Metadata
 You can fetch the metadata from the metadata URLs available from the export
-data. 
+data.
 
     $ php metadata.php
 
@@ -48,7 +48,7 @@ data.
 You can validate the export you just made using `validate.php`.
 
     $ php validate.php
-    
+
 This script uses the export written by `export.php` and creates a log file in
 the `export` directory called `log.json`.
 
@@ -91,25 +91,25 @@ In order to automatically run the scripts, the following cron is suggested:
     0 * * * * php /home/fkooman/janus-tools/export.php && php /home/fkooman/janus-tools/validate.php >/dev/null && php /home/fkooman/janus-tools/aclDump.php
     0 4 * * mon php /home/fkooman/janus-tools/mail.php >/dev/null
 
-This will run the most scripts every hour, and the metadata fetching at 3:33 AM 
+This will run the most scripts every hour, and the metadata fetching at 3:33 AM
 which gives it half an hour to complete before the other scripts run again. In
-addition this will once a week, on Monday morning at 4am mail a log to the 
+addition this will once a week, on Monday morning at 4am mail a log to the
 configured addresses in `config/config.ini`.
 
 # Validation Filters
-You can add your own validation filters to 
-`src/SURFnet/janus/validate/validators`. Copy one of the other validators to 
+You can add your own validation filters to
+`src/SURFnet/janus/validate/validators`. Copy one of the other validators to
 get started and modify it as needed.
 
 You must implement two methods: `idp` and `sp` with their respective parameters.
-You can implement your check using the data that is made available as 
+You can implement your check using the data that is made available as
 parameters to the methods. If you are writing a filter only for IdPs or for SPs
-you can leave the body of the other type empty. You can write log entries 
+you can leave the body of the other type empty. You can write log entries
 using for example:
 
     $this->logWarning("sp must have arp");
-    
-There is also the option to use `$this->logError("msg");`. The context of the 
+
+There is also the option to use `$this->logError("msg");`. The context of the
 entity is saved as well: the entity ID of the entity, the entity type, i.e.:
 `saml20-idp` or `saml20-sp` and the module that generates the message.
 

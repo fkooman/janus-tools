@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2013 François Kooman <francois.kooman@surfnet.nl>
+ * CCopyright 2013 Remold Krol <remold.krol@everett.nl>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

@@ -64,15 +64,15 @@ class Export
 
         $sql = <<< EOF
 SELECT
-    C.id, C.revisionNr
+    CONNECTION.id, CONNECTION.revisionNr
 FROM
-    janus__connection AS C
+    janus__connection AS CONNECTION
 INNER JOIN
-    janus__connectionRevision AS CR ON
-        CR.eid = C.id AND
-        CR.revisionid = C.revisionNr
+    janus__connectionRevision AS CONNECTION_REVISION ON
+        CONNECTION_REVISION.eid = CONNECTION.id AND
+        CONNECTION_REVISION.revisionid = CONNECTION.revisionNr
 WHERE
-    CR.active = "yes" AND CR.state=:state AND C.type=:type
+    CONNECTION_REVISION.active = "yes" AND CONNECTION_REVISION.state=:state AND CONNECTION.type=:type
 EOF;
 
         $sth = $this->db->prepare($sql);
@@ -94,19 +94,18 @@ EOF;
     {
         $sql = <<< EOF
     SELECT
-        e.entityid
+        ALLOWED_CONNECTION.name AS entityid
     FROM
-        `janus__entity` e,
-        `janus__allowedEntity` a
+        janus__connectionRevision AS CONNECTION_REVISION
+    INNER JOIN
+        `janus__allowedConnection` a ON
+        a.connectionRevisionId = CONNECTION_REVISION.id
+    INNER JOIN
+        janus__connection AS ALLOWED_CONNECTION ON
+        ALLOWED_CONNECTION.id = a.remoteeid
     WHERE
-        a.eid = :eid AND a.revisionid = :revisionid
-            AND e.eid = a.remoteeid
-            AND e.revisionid = (SELECT
-                MAX(revisionid)
-            FROM
-                `janus__entity`
-            WHERE
-                eid = a.remoteeid)
+        CONNECTION_REVISION.eid = :eid AND
+        CONNECTION_REVISION.revisionid = :revisionid
 EOF;
 
         $sth = $this->db->prepare($sql);
@@ -122,19 +121,18 @@ EOF;
     {
         $sql = <<< EOF
     SELECT
-        e.entityid
+        BLOCKED_CONNECTION.name AS entityid
     FROM
-        `janus__entity` e,
-        `janus__blockedEntity` b
+        janus__connectionRevision AS CONNECTION_REVISION
+    INNER JOIN
+        `janus__allowedConnection` b ON
+        b.connectionRevisionId = CONNECTION_REVISION.id
+    INNER JOIN
+        janus__connection AS BLOCKED_CONNECTION ON
+        BLOCKED_CONNECTION.id = b.remoteeid
     WHERE
-        b.eid = :eid AND b.revisionid = :revisionid
-            AND e.eid = b.remoteeid
-            AND e.revisionid = (SELECT
-                MAX(revisionid)
-            FROM
-                `janus__entity`
-            WHERE
-                eid = b.remoteeid)
+        CONNECTION_REVISION.eid = :eid AND
+        CONNECTION_REVISION.revisionid = :revisionid
 EOF;
 
         $sth = $this->db->prepare($sql);
@@ -152,7 +150,7 @@ EOF;
 SELECT
     *
 FROM
-    janus__entity
+    janus__connectionRevision
 WHERE
     eid = :eid AND revisionid = :revisionid
 EOF;
@@ -184,9 +182,16 @@ EOF;
             $entity['disableConsent'] = $this->getDisableConsent($eid, $revisionid);
         }
 
-        // arp (SP only)
+        /**
+         * arp (SP only)
+         *
+         * Attributes are store like:
+         * array()            --> no attributes are released
+         * array("x","y","z") --> attributes x, y, z are released
+         * false              --> no ARP (so *ALL* attributes are released)
+         */
         if ("saml20-sp" === $type) {
-            $entity['attributes'] = $this->getArp($entity['entityData']['arp']);
+            $entity['attributes'] = unserialize($entity['entityData']['arp_attributes']);
         }
 
         return $entity;
@@ -196,11 +201,15 @@ EOF;
     {
         $sql = <<< EOF
     SELECT
-        `key`, `value`
+        METADATA.`key`, METADATA.`value`
     FROM
-        janus__metadata
+        janus__connectionRevision AS CONNECTION_REVISION
+    INNER JOIN
+        janus__metadata AS METADATA ON
+        METADATA.connectionRevisionId = CONNECTION_REVISION.id
     WHERE
-        eid = :eid AND revisionid = :revisionid
+        CONNECTION_REVISION.eid = :eid AND
+        CONNECTION_REVISION.revisionid = :revisionid
 EOF;
 
         $sth = $this->db->prepare($sql);
@@ -218,27 +227,6 @@ EOF;
     }
 
     /**
-     * Returns the Attribute Release Policy (ARP) for an SP
-     *
-     * @return array()            --> no attributes are released
-     * @return array("x","y","z") --> attributes x, y, z are released
-     * @return false              --> no ARP (so *ALL* attributes are released)
-     */
-    private function getArp($aid)
-    {
-        $sql = "SELECT attributes FROM janus__arp WHERE aid = :aid";
-        $sth = $this->db->prepare($sql);
-        $sth->bindValue(":aid", $aid, PDO::PARAM_INT);
-        $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
-        if (null === $result['attributes']) {
-            return false;
-        }
-
-        return unserialize($result['attributes']);
-    }
-
-    /**
      * Returns ? IdP only?!
      *
      * @return array() -> entityids of the entities for which consent is
@@ -246,7 +234,21 @@ EOF;
      */
     private function getDisableConsent($eid, $revisionid)
     {
-        $sql = "SELECT remoteentityid FROM janus__disableConsent WHERE eid = :eid AND revisionid = :revisionid";
+        $sql = <<< EOF
+    SELECT
+        BLOCKED_CONNECTION.name AS entityid
+    FROM
+        janus__connectionRevision AS CONNECTION_REVISION
+    INNER JOIN
+        `janus__disableConsent` dc ON
+        dc.connectionRevisionId = CONNECTION_REVISION.id
+    INNER JOIN
+        janus__connection AS BLOCKED_CONNECTION ON
+        BLOCKED_CONNECTION.id = dc.remoteeid
+    WHERE
+        CONNECTION_REVISION.eid = :eid AND
+        CONNECTION_REVISION.revisionid = :revisionid
+EOF;
         $sth = $this->db->prepare($sql);
         $sth->bindValue(":eid", $eid);
         $sth->bindValue(":revisionid", $revisionid);

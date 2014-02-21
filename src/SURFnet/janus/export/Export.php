@@ -64,16 +64,15 @@ class Export
 
         $sql = <<< EOF
 SELECT
-    e.eid, e.revisionid
+    C.id, C.revisionNr
 FROM
-    janus__entity e
+    janus__connection AS C
+INNER JOIN
+    janus__connectionRevision AS CR ON
+        CR.eid = C.id AND
+        CR.revisionid = C.revisionNr
 WHERE
-    active = "yes" AND state=:state AND type=:type AND revisionid = (SELECT
-            MAX(revisionid)
-        FROM
-            janus__entity
-        WHERE
-            eid = e.eid)
+    CR.active = "yes" AND CR.state=:state AND C.type=:type
 EOF;
 
         $sth = $this->db->prepare($sql);
@@ -85,7 +84,7 @@ EOF;
         $entities = array();
 
         foreach ($result as $e) {
-            $entities[] = $this->getEntity($type, $e['eid'], $e['revisionid']);
+            $entities[] = $this->getEntity($type, $e['id'], $e['revisionNr']);
         }
 
         return $entities;

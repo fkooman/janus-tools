@@ -70,7 +70,8 @@ function fetchMetadata($metadataUrl)
             array(
                 'curl.options' => array(
                     CURLOPT_CONNECTTIMEOUT => 10,
-                    CURLOPT_TIMEOUT => 15
+                    CURLOPT_TIMEOUT => 15,
+                    CURLOPT_FOLLOWLOCATION => TRUE
                 ),
             )
         );

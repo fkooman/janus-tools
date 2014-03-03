@@ -35,7 +35,7 @@ class SurfCheckArp extends Validate implements ValidateInterface
 
     public function sp(array $entityData, array $metadata, array $allowedEntities, array $blockedEntities, $arp)
     {
-        if (false === $arp) {
+        if ( $arp === NULL) {
             $this->logWarning("sp must have arp");
         }
     }

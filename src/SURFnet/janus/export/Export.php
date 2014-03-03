@@ -192,6 +192,7 @@ EOF;
          */
         if ("saml20-sp" === $type) {
             $entity['attributes'] = unserialize($entity['entityData']['arp_attributes']);
+            unset($entity['entityData']['arp_attributes']);
         }
 
         return $entity;

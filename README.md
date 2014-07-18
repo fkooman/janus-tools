@@ -30,6 +30,8 @@ configured in `config/config.ini`!
 # Usage
 
 ## Export
+The export function will create a json based export of the JANUS reguistry data, including entity metadata, SCL and ARP information.
+
 You can run the `export.php` script after you configured everything.
 
     $ php export.php
@@ -39,12 +41,16 @@ If you want to view the export in a formatted way you can use Python:
     $ cat export/export.json | python -mjson.tool | less
 
 ## Metadata
+The metadata function will fetch all remote metadata for all registered entities that have a metdata URL configured in teh registry
+
 You can fetch the metadata from the metadata URLs available from the export
 data.
 
     $ php metadata.php
 
 ## Validation
+The validate function will compare exported registry data with the metadata as was downloaded from the remote metadata YRL for each entity
+
 You can validate the export you just made using `validate.php`.
 
     $ php validate.php
@@ -62,7 +68,7 @@ You can also use Python here to view the log somewhat formatted:
     $ cat export/log.json | python -mjson.tool
 
 ## ACL
-You can generate the ACL as JSON using the ACL tool:
+You can generate the ACL list as a JSON file using the ACL tool:
 
     $ php aclDump.php
 

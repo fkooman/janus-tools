@@ -21,6 +21,8 @@ require_once 'vendor/autoload.php';
 use Guzzle\Http\Client;
 use fkooman\Config\Config;
 
+echo date("Y-m-d H:i:s") . " :: retrieving entity metadata\n";
+
 try {
     $configFile = __DIR__ . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.ini";
     $config = Config::fromIniFile($configFile);
@@ -61,6 +63,9 @@ try {
     echo sprintf("ERROR: %s", $e->getMessage());
     die(PHP_EOL);
 }
+
+echo date("Y-m-d H:i:s") . " :: entity metadata retrieval done\n";
+
 
 function fetchMetadata($metadataUrl)
 {

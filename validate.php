@@ -18,6 +18,9 @@
 
 require_once 'vendor/autoload.php';
 
+
+echo date("Y-m-d H:i:s") . " :: starting Janus entity validation\n";
+
 try {
     $configFile = __DIR__ . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.ini";
     $config = \fkooman\Config\Config::fromIniFile($configFile);
@@ -56,3 +59,5 @@ try {
     echo sprintf("ERROR: %s", $e->getMessage());
     die(PHP_EOL);
 }
+
+echo date("Y-m-d H:i:s") . " :: entity validation done\n";

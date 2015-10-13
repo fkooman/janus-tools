@@ -86,8 +86,10 @@ class Ssp
     {
         foreach ($this->sp as $index => $entity) {
             $entityId = $entity['entityid'];
-            $entity['IDPList'] = $this->acl['saml20-sp'][$entityId];
-            $this->sp[$index] = $entity;
+            if (isset($this->acl['saml20-sp'][$entityId])) {
+                $entity['IDPList'] = $this->acl['saml20-sp'][$entityId];
+                $this->sp[$index] = $entity;
+            } 
         }
     }
 

@@ -125,8 +125,13 @@ EOF;
     SELECT
         e.entityid
     FROM
-        `janus__entity` e,
-        `janus__blockedEntity` b
+        janus__connectionRevision AS CONNECTION_REVISION
+    INNER JOIN
+        `janus__blockedConnection` b ON
+        b.connectionRevisionId = CONNECTION_REVISION.id
+    INNER JOIN
+        janus__connection AS BLOCKED_CONNECTION ON
+        BLOCKED_CONNECTION.id = b.remoteeid
     WHERE
         b.eid = :eid AND b.revisionid = :revisionid
             AND e.eid = b.remoteeid
